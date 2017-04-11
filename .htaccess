@@ -1,0 +1,7 @@
+RewriteEngine On    
+
+# changes url from /about.php to /about
+RewriteRule    ^poker/?$    poker.php    [NC,L]
+
+# changes url from /about.php to /about
+RewriteRule    ^algo/?$    algo.php    [NC,L]
