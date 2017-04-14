@@ -32,11 +32,13 @@ log_IP("about");
     </head>
     <body>
         <?php include('index_header.php'); ?>
-       
+        <div>
+            <p class="title">About</p>
+        </div>
        <div class="content">
            
-           <p>Smart Software's goal is to display the power of artificial intelligence.</p>
-           <p style='padding-top:30px;'>Founder: James Quintero</p>
+           <!--<p>Smart Software's goal is to display the power of artificial intelligence.</p>-->
+           <p style='padding-top:30px;'>James Quintero</p>
            <p id='asdf'></p>
            
            

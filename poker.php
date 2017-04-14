@@ -31,10 +31,12 @@ log_IP("poker");
     </head>
     <body>
         <?php include('index_header.php'); ?>
-       
+        <div>
+            <p class="title">Artificial Intelligence in Poker</p>
+        </div>
        <div class="content">
            <p>Artificial Intelligence will be a dominating force in future poker play. Current bots that play on online poker sites are not true A.I., and are only as good as the creators. Our A.I. poker program will be able to learn from its previous play to get better, and will be able to beat the best in the world.</p>
-           <p style='padding-top:10px;'>August 2016: Users will be able to play heads up against the A.I. A prize may be awarded if the player wins.</p>
+           <!--<p style='padding-top:10px;'>August 2016: Users will be able to play heads up against the A.I. A prize may be awarded if the player wins.</p>-->
            
        </div>
         

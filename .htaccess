@@ -5,3 +5,18 @@ RewriteRule    ^poker/?$    poker.php    [NC,L]
 
 # changes url from /about.php to /about
 RewriteRule    ^algo/?$    algo.php    [NC,L]
+
+# changes url from /view_album.php?album_id=Nsi324ns to /album/Nsi324ns
+#RewriteRule    ^album/([A-Za-z0-9-]+)/?$    view_album.php?album_id=$1    [NC,L]
+#RewriteRule    ^album/([A-Za-z0-9-]+)=/?$    view_album.php?album_id=$1    [NC,L,B]
+
+# changes url from /view_album.php?album_id=Nsi324ns to /album/Nsi324ns
+#RewriteRule    ^album/([A-Za-z0-9-]+)=([A-Za-z0-9-]+)/?$    view_album.php?album_id=$1&&image_id=$2    [NC,L,B]
+
+# changes url from /about.php to /about
+RewriteRule    ^about/?$    about.php    [NC,L]
+
+
+# redirects the inexistant top.php file
+#RewriteRule    ^top.php/?$    http://imagepxl.com/viral [NC,L,R=301]
+#RewriteRule    ^gallery/([A-Za-z0-9-]+)/?$    view_gallery.php?album_id=$1    [NC,L]

@@ -31,18 +31,112 @@ log_IP("betting");
     </head>
     <body>
         <?php include('index_header.php'); ?>
-       
+        <div>
+            <p class="title">Algorithmic Sports Betting</p>
+        </div>
        <div class="content">
            
            <p>Algorithms will be used to predict odds in sports games and bet accordingly.</p>
            
            <p style='padding-top:30px;text-decoration:underline;'>Current Sports:</p>
-           <p>NBA</p>
-           <p>NHL</p>
+           
+          
+           
+           
+           
+            <table id="header_table" style="height:70px;margin-top:10px;width:600px;">
+                <tbody>
+                    <tr>
+                        <td class="left_header_button header_button" style="width:33%;border-left:1px solid rgb(200,200,200);">
+                            <a href="./nba.php?season=2015" class="header_link">
+                                <table style="margin:0 auto;height:100%">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="icon" src="./images/nba.png" style="height:40px;"/>
+                                            </td>
+                                            <td>
+                                                <p class="header_button_text" style='font-size:12px;'>Basketball (NBA)</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </a>
+                         </td>
+<!--                    </tr>
+                    <tr>-->
+                         <td class="middle_header_button header_button" style="width:33%">
+                             <a href="./nhl.php"  class="header_link">
+                                 <table style="margin:0 auto;height:100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="icon" src="./images/nhl2.png" style="height:50px;"/>
+                                            </td>
+                                            <td>
+                                                <p class="header_button_text" style='font-size:12px;'>Hockey (NHL)</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                             </a>
+                         </td>
+<!--                    </tr>
+                    <tr>-->
+                         <td class="right_header_button header_button" style="width:33%;border-right:1px solid rgb(200,200,200);">
+                             <a href="./mlb.php?season=2016"  class="header_link">
+                                 <table style="margin:0 auto;height:100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="icon" src="./images/mlb.png" style="height:50px;"/>
+                                            </td>
+                                            <td>
+                                                <p class="header_button_text" style='font-size:12px;'>Baseball (MLB)</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                             </a>
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+           
+           
+           
+           
+           
+           
+           
+<!--           <a href="./nba.php?season=2015" class="link" ><p>NBA</p></a>
+           <a href="./nhl.php" class="link" ><p>NHL</p></a>
+           <a href="./mlb.php?season=2016" class="link" ><p>MLB</p></a>-->
            
            <p style='padding-top:30px;text-decoration:underline;'>Future Sports:</p>
-           <p>NFL</p>
-           <p>MLB</p>
+           <table id="header_table" style="height:70px;margin-top:10px;width:200px;">
+                <tbody>
+                    <tr>
+                         <td class="middle_header_button header_button" style="width:33%;border-left:1px solid rgb(200,200,200);">
+                             
+                                 <table style="margin:0 auto;height:100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="icon" src="./images/nfl.png" style="height:50px;"/>
+                                            </td>
+                                            <td>
+                                                <p class="header_button_text" style='font-size:12px;'>Football (NFL)</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                             
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+           
            
            <p style="margin-top:30px;"></p>
        </div>

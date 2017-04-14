@@ -1,41 +1,46 @@
-html{background-color:rgb(235,235,240);background-image:url('./images/backgrounds/egg_shell.png');height:100%;}
-body{width:1000px;min-height:750px;box-shadow:0px 0px 12px rgb(50,50,50);background-image:url('./images/backgrounds/grey_wash_wall.png');padding:20px;margin:0px;margin:0 auto;font-family: 'Russo One', sans-serif;}
+//html{background-color:rgb(235,235,240);background-image:url('./images/backgrounds/egg_shell.png');height:100%;}
+//body{width:1000px;min-height:750px;box-shadow:0px 0px 12px rgb(50,50,50);background-image:url('./images/backgrounds/grey_wash_wall.png');padding:20px;margin:0px;margin:0 auto;font-family: 'Russo One', sans-serif;}
+html{height:100%;/*background-image:url('./images/backgrounds/grey_wash_wall.png');*/background-image:url('./images/backgrounds/mooning.png');}
+body{margin:0px;padding:0px;font-family: 'Russo One', sans-serif;}
 table{border-spacing:0px;}
-
+p{/*color:rgb(235,235,235);*/color:rgb(70,70,70);margin:0px;font-size:14px;font-family: 'Russo One', sans-serif;letter-spacing:1px;}
+span{font-size:14px;font-family: 'Russo One', sans-serif;letter-spacing:1px;}
 
 #header{padding:0px;margin:0px;width:100%;position:relative;}
 /*#header{padding:0px;margin:0px;width:100%;background:url('http://i.imagepxl.com/default/header_background.png');position:relative;box-shadow:0px 0px 25px black;}*/
-#footer{width:1000px;margin:0 auto;margin-top:15px;}
-#header_body{width: 1000px;margin:0 auto;position:relative;padding-top:20px;}
+#footer{margin:0 auto;margin-top:15px;}
+//#header_body{width: 1000px;margin:0 auto;position:relative;padding-top:20px;}
+#header_body{padding-top:20px;}
+.bad_odds{color:rgb(220,150,150);}
+.good_odds{color:lightgreen;}
+.won{color:lightgreen;}
+.lost{color:rgb(220,150,150);}
+
 /*.content{width:900px;border-radius:5px;border:1px solid black;height:100%;margin:0 auto;margin-top:15px;position:relative;}*/
 #company_name{cursor:pointer;width:500px;}
-.content{position: relative;margin-top: 20px;border-top: 1px solid rgb(200,200,200);padding:15px;}
-.description{margin:0px;padding:0px;}
-.profile_picture{width:150px;height:150px;border-radius: 3px;margin-right: 5px;margin-bottom: 10px;border: 1px solid black;}
-.small_profile_picture{width:75px;height:75px;border-radius:3px;border:1px solid gray;}
-#profile_pic_unit{width:150px;}
-.name{font-size:20px;}
-.profile_stat_numbers{font-weight:bold;font-family:sans-serif}
+.content{position: relative;/*border-top: 1px solid rgb(200,200,200);*/border-top: 1px solid rgb(50,50,50);padding:15px;padding-left:35px;padding-right:35px;}
 #icon{font-size:25px;color:rgb(220,20,0);font-weight:bold;cursor:pointer;padding-top:5px;position:absolute;}
 /*#header_table{position: relative;border-spacing:0px;padding:0px;float: right;}*/
 #header_table{width:100%;height:100px;}
+#header_container{padding:20px;padding-bottom:0px;}
+#betting_table td p{font-size:11px;}
 .table_border{border-collapse:collapse;border:1px solid gray;}
-.table_border,.table_border th,.table_border td{border:1px solid rgb(200,200,200);padding:5px;}
-.header_button{border-top:1px solid rgb(200,200,200);border-bottom:1px solid rgb(200,200,200);cursor: pointer;text-align:center;}
-.left_header_button{border-right:1px solid rgb(200,200,200);}
-.middle_header_button{border-right:1px solid rgb(200,200,200);}
+.table_border,.table_border th,.table_border td{/*border:1px solid rgb(200,200,200);*/border-top:1px solid rgb(100,100,100);padding:5px;}
+.header_button{border-top:1px solid rgb(100,100,100);border-bottom:1px solid rgb(100,100,100);/*border-top:1px solid rgb(200,200,200);border-bottom:1px solid rgb(200,200,200);*/cursor: pointer;text-align:center;}
+/*.left_header_button{border-right:1px solid rgb(200,200,200);}
+.middle_header_button{border-right:1px solid rgb(200,200,200);}*/
+.left_header_button{border-right:1px solid rgb(100,100,100);}
+.middle_header_button{border-right:1px solid rgb(100,100,100);}
 .right_header_button{}
-.header_button:hover{background-color:rgba(200,200,200,0.2);}
+.header_button:hover{background-color:rgba(100,100,100,0.2);/*background-color:rgba(200,200,200,0.2);*/}
 .header_button_text{font-size: 16px;margin:3px;}
 .header_link{display:block;height:100%;width:100%;text-decoration:none;}
-.link{outline: none;text-decoration: none;color:rgb(220,220,220);}
+.link{outline: none;text-decoration: none;/*color:rgb(220,220,220);*/color:rgb(100,100,100);}
 .link:hover{text-decoration:underline;}
 .input_box{padding: 4px;font-size: 12px;border-radius: 2px;box-shadow: gray 0px 0px 2px 0px inset; border: 1px solid gray;}
 .input_box:focus{box-shadow:inset 0px 0px 4px 0px rgb(220,21,0);border-color:rgb(220,20,0);outline:none;}
 .input_box:blur{border:1px solid gray;box-shadow:inset 0px 0px 5px 0px gray;}
-p{margin:0px;font-size:14px;font-family: 'Russo One', sans-serif;color:rgb(225,225,225);letter-spacing:1px;}
 /*#window_background{position:fixed;top: 0px;width:100%;height:100%;box-shadow: gray 0px 0px 150px inset;}*/
-span{font-size:14px;font-family: 'Russo One', sans-serif;letter-spacing:1px;}
 .graph{width:100%;border-radius:5px;}
 .graph_container{border-radius:5px;margin-top:20px;margin-bottom:20px;border:1px solid white;background-color:rgba(50,50,50,0.3);}
 .small_graph{border-radius:3px;}
@@ -366,7 +371,7 @@ opacity:0.75;
 .blue_theme{background-position:-75px -75px;}
 .text_color{color:rgb(30,30,30);}
 .about_image{max-width:500px;border:1px solid gray;border-radius:20px;}
-.title{font-size:20px;}
+.title{font-size:30px;text-align:center;padding-top:20px;padding-bottom:20px;}
 .index_input{width:120px}
 
 
