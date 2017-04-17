@@ -16,6 +16,9 @@ RewriteRule    ^algo/?$    algo.php    [NC,L]
 # changes url from /about.php to /about
 RewriteRule    ^about/?$    about.php    [NC,L]
 
+# changes url from /projects.php to /projects
+RewriteRule    ^projects/?$    projects.php    [NC,L]
+
 
 # redirects the inexistant top.php file
 #RewriteRule    ^top.php/?$    http://imagepxl.com/viral [NC,L,R=301]

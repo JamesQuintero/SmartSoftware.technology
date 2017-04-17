@@ -1,11 +1,5 @@
-<!-- Uses Carousel Bootstrap -->
-
 <?php
 include('universal_functions.php');
-
-// log_IP("index");
-
-//header( 'Location: ./algo.php?view=results');
 ?>
 
 <!DOCTYPE>
@@ -20,6 +14,8 @@ include('universal_functions.php');
       <title>Smart Software - AI Development</title>
       
       <?php include('code_header.php'); ?>
+      <link href="css/cover.css" rel="stylesheet">
+
 
 
       <script type="text/javascript">
@@ -30,222 +26,105 @@ include('universal_functions.php');
             ?>
          });
       </script>
+
+      <style>
+        
+        footer{
+          color:rgb(50,50,50);
+
+        }
+        .cover{
+          background:rgba(250,250,250,0.8);
+          padding:20px;
+          border-radius:50px;
+          box-shadow:0px 0px 50px rgb(200,200,200);
+          /*text-shadow:0px 0px 1px black;*/
+          text-shadow:none;
+          color:rgb(50,50,50);
+        }
+        .site-wrapper{
+          -webkit-box-shadow:inset 0 0 100px rgba(0,0,0,0.2);
+          box-shadow:inset 0 0 100px rgba(0,0,0,0.2);
+        }
+        .btn-default{
+          border:1px solid rgb(200,200,200);
+        }
+        .btn-default:hover{
+          border:1px solid rgb(50,50,50);
+        }
+        .masthead-brand{
+          color:black;
+          text-shadow:none;
+        }
+        .masthead-nav .active a{
+          color:rgba(50,50,50,0.75);
+          border-bottom-color:rgb(200,200,200);
+        }
+        .masthead-nav .active a:hover{
+          color:rgba(50,50,50,1);
+          border-bottom-color:rgb(50,50,50);
+        }
+        .masthead-nav li a{
+          color:rgba(50,50,50,0.75);
+          text-shadow:none;
+        }
+        .masthead-nav li a:hover{
+          color:rgba(50,50,50,0.75);
+          text-shadow:none;
+          border-bottom-color:rgb(200,200,200);
+        }
+      </style>
+
    </head>
    <body>
-        <?php include('index_header.php'); ?>
+
+      <?php include("index_header.php"); ?>
        
-       <!-- <div class="content" style="border-top:none;">
-           <p>Artificial Intelligence development. </p>
-           <p>Smart Software has an algorithm for <a href="./algo.php" class="link">stock market predictions</a>, and <a href="./betting.php" class="link">sports team betting.</a> </p>
-       </div> -->
-       
+      <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+          <div class="cover-container">
 
-
-
-
-
-
-       
-
-
-
-
-
-
-
-
-
-
-
-          
-
-
-
-
-          <!-- Carousel
-          ================================================== -->
-          <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-              <li data-target="#myCarousel" data-slide-to="1"></li>
-              <li data-target="#myCarousel" data-slide-to="2"></li>
-              <li data-target="#myCarousel" data-slide-to="3"></li>
-              <li data-target="#myCarousel" data-slide-to="4"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-              <div class="item active">
-                <!-- <img class="first-slide" src="http://altoday.com/wp-content/uploads/2016/02/stock-market.jpg" alt="First slide"> -->
-                <!-- <img class="first-slide" src="https://s-media-cache-ak0.pinimg.com/originals/04/f5/1c/04f51c397294b3822f739763c4c4d577.jpg" alt="First slide"> -->
-                <img class="first-slide" src="https://previews.123rf.com/images/alexmit/alexmit1210/alexmit121000034/16074841-Stock-market-graph-background-Stock-Photo-exchange.jpg" alt="First slide">
-                <div class="container">
-                  <div class="carousel-caption">
-                    <h1>Stock Market Prediction</h1>
-                    <p>Algorithms used to predict stock price movements.</p>
-                    <p><a class="btn btn-lg btn-success" href="algo.php" role="button">View Predictions</a></p>
-                  </div>
-                </div>
+            <!-- <div class="masthead clearfix">
+              <div class="inner">
+                <h3 class="masthead-brand">Smart Software</h3>
+                <nav>
+                  <ul class="nav masthead-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="projects">Projects</a></li>
+                    <li><a href="about">About</a></li>
+                  </ul>
+                </nav>
               </div>
-              <div class="item">
-                <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
-                <div class="container">
-                  <div class="carousel-caption">
-                    <h1>Algorithmic Sports Betting</h1>
-                    <p>Algorithms used to predict game outcomes for NBA, NHL, and MLB games.</p>
-                    <p><a class="btn btn-lg btn-primary" href="betting.php" role="button">View Predictions</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="item">
-                <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
-                <div class="container">
-                  <div class="carousel-caption">
-                    <h1>AI Poker</h1>
-                    <p>Play Texas Holdem Poker against a self-learning neural network.</p>
-                    <p><a class="btn btn-lg btn-default disabled" href="" role="button">Available Soon</a></p>
-                  </div>
-                </div>
-              </div>
+            </div> -->
 
 
-              <div class="item">
-                <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
-                <div class="container">
-                  <div class="carousel-caption">
-                    <h1>AI Tic-Tac-Toe</h1>
-                    <p>Play Tic-Tac-Toe against a self-taught neural network.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Play Against</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="item">
-                <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
-                <div class="container">
-                  <div class="carousel-caption">
-                    <h1>AI Ultimate Tic-Tac-Toe</h1>
-                    <p>Play Ultimate Tic-Tac-Toe against a self-taught neural network.</p>
-                    <p><a class="btn btn-lg btn-default disabled" href="" role="button">Available Soon</a></p>
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
-            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div><!-- /.carousel -->
-
-
-          <!-- Marketing messaging and featurettes
-          ================================================== -->
-          <!-- Wrap the rest of the page in another container to center all the content. -->
-
-          <div class="container marketing">
-
-            <!-- Three columns of text below the carousel -->
-            <div class="row">
-              <div class="col-lg-4">
-                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-              </div><!-- /.col-lg-4 -->
-              <div class="col-lg-4">
-                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-                <h2>Heading</h2>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-              </div><!-- /.col-lg-4 -->
-              <div class="col-lg-4">
-                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-              </div><!-- /.col-lg-4 -->
-            </div><!-- /.row -->
-
-
-            <!-- START THE FEATURETTES -->
-
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-              <div class="col-md-7">
-                <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-              </div>
-              <div class="col-md-5">
-                <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-              </div>
+            <div class="inner cover">
+              <h1 class="cover-heading">Smart Software</h1>
+              <p class="lead">Artificial Intelligence is the most powerful tool humanity could ever have, and we're trying to make that a reality.</p>
+              <p class="lead">
+                <a href="projects" class="btn btn-lg btn-default">View Projects</a>
+              </p>
             </div>
 
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-              <div class="col-md-7 col-md-push-5">
-                <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-              </div>
-              <div class="col-md-5 col-md-pull-7">
-                <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-              </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-              <div class="col-md-7">
-                <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-              </div>
-              <div class="col-md-5">
-                <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-              </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <!-- /END THE FEATURETTES -->
-
-
-            <!-- FOOTER -->
+            <div class="mastfoot">
+              <div class="inner">
+                <!-- FOOTER -->
             <footer>
-              <p>&copy; 2017 Smart Software &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+              <p>&copy; 2017 Smart Software</p>
             </footer>
+              </div>
+            </div>
 
-          </div><!-- /.container -->
+          </div>
+
+        </div>
+
+      </div>
 
         
 
 
 
 
-
-
-
-
-
-       
-       
-       
-       
-       
-              
-       
-       
-       
-       
-       
-
-
-      <?php include('footer.php'); ?>
    </body>
 </html>

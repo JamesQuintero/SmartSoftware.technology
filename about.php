@@ -1,18 +1,24 @@
 <?php
 include('universal_functions.php');
 
-log_IP("about");
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
         <meta name="description" content="SmartSoftware is an Artificial Intelligence development project" />
         <meta name="keywords" content="smart software, smartsoftware, about, A.I., AI, Artificial Intelligence" />
         <title>Smart Software - A.I. Sports Betting</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+
         <?php include('code_header.php'); ?>
-        <script type="text/javascript" src="./main.js"></script>
+        <link href="css/carousel.css" rel="stylesheet">
+
         <script type="text/javascript">
             
             function display_email()
@@ -27,24 +33,76 @@ log_IP("about");
                display_email() 
             });
             
-            <?php include('required_google_analytics.js'); ?>
+            <?php include('js/required_google_analytics.js'); ?>
         </script>
+
+        <style>
+            body{
+                background:url("./images/carousel-images/AI/cover.jpg");
+                background-size:100%;
+                background-position:50% 0%;
+                background-attachment:fixed;
+            }
+            .marketing{
+                background-color:rgba(250,250,250,0.9);
+                /*border:1px solid gray;
+                box-shadow:0px 0px 20px gray;*/
+                box-shadow:0px 0px 200px white;
+            }
+            .img-circle{
+                border:1px solid gray;
+            }
+        </style>
     </head>
     <body>
         <?php include('index_header.php'); ?>
-        <div>
-            <p class="title">About</p>
-        </div>
-       <div class="content">
-           
-           <!--<p>Smart Software's goal is to display the power of artificial intelligence.</p>-->
-           <p style='padding-top:30px;'>James Quintero</p>
-           <p id='asdf'></p>
-           
-           
-           
-       </div>
         
-        <?php include("./footer.php"); ?>
+
+
+
+
+    
+        <div class="container marketing" style="padding-top:50px;">
+
+            <h1>About</h1>
+
+            <p>Smart Software aims to bring general artificial intelligence into the world. This general AI will aid in practically all industries, which will then raise the living standards for everyone. </p>
+
+          <!-- Three columns of text below the carousel -->
+          <div class="row" style="padding-top:30px;">
+
+            <div class="col-lg-4">
+              <img class="img-circle" src="./images/people/james.PNG" alt="Generic placeholder image" width="140" height="140">
+              <h2>James Quintero</h2>
+              <p>Undergraduate computer science student at San Francisco State University.</p>
+              <p id="asdf"></p>
+              <!-- <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
+            </div>
+
+            <!-- <div class="col-lg-4">
+              <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+              <h2>Heading</h2>
+              <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+
+            <div class="col-lg-4">
+              <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+              <h2>Heading</h2>
+              <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div> -->
+
+          </div>
+
+
+          <footer>
+            <p>&copy; 2017 Smart Software</p>
+          </footer>
+
+        </div>
+
+
+
     </body>
 </html>
