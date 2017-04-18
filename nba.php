@@ -6,7 +6,7 @@ if($_GET['season']=="")
 else
     $season=(string)$_GET['season'];
 
-log_IP("nba");
+// log_IP("nba");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,9 +16,10 @@ log_IP("nba");
         <meta name="keywords" content="A.I., AI, Artificial Intelligence, sports, betting, odds, sports betting" />
         <title>Smart Software - Algorithmic Sports Betting</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        
         <?php include('code_header.php'); ?>
-        <script type="text/javascript" src="./main.js"></script>
-        <script src="jquery.csv.js"></script>
+
+        <script src="js/jquery.csv.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 
@@ -124,7 +125,7 @@ log_IP("nba");
             }
             
             <?php include('required_jquery.js'); ?>
-            <?php include('required_google_analytics.js'); ?>
+            <?php include('js/required_google_analytics.js'); ?>
         </script>
     </head>
     <body>

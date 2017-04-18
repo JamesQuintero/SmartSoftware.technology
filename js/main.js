@@ -13,12 +13,12 @@ function center_image(image)
 //        image_height = this.height; // work for in memory images.
 //    });
    
-    console.log(window_width);
-    console.log(window_height);
-    console.log(screen_width);
-    console.log(screen_height);
-    console.log(image_width);
-    console.log(image_height);
+//    console.log(window_width);
+//    console.log(window_height);
+//    console.log(screen_width);
+//    console.log(screen_height);
+//    console.log(image_width);
+//    console.log(image_height);
    
     
     $(image).css('margin-top', (screen_height-image_height)/2);
@@ -26,41 +26,466 @@ function center_image(image)
 //    $(image).css('left', Document_width-250);
     
 }
-function name_over()
+
+//puts the data into a betting table
+function make_betting_table(league, data)
 {
-    $('#company_name').attr('src', 'http://smartsoftware.technology/images/logo_V1_down.png');
-}
-function name_out()
-{
-    $('#company_name').attr('src', 'http://smartsoftware.technology/images/logo_V1.png');
-}
-function alert_login()
-{
-    $('#login_load').show();
-    
-    var url="./login.php";
-    //checks if viewing from album
-    $.ajax({url: url, async: false, error: function() {
-                  url="../login.php"
-            }});
-    
-    $.post(url,
+    var stuff = $.csv.toObjects(data);
+
+    var html="";
+
+    //header for the headers
+    html+="<tr>";
+    html+="<td colspan='10'></td>";
+    html+="<td colspan='3'><p style='text-align:center;'>Strategy 0.0</p></td>";
+    html+="<td colspan='3' style='border-right:2px solid white;'><p style='text-align:center;'>Strategy 0.1</p></td>";
+    html+="<td colspan='3'><p style='text-align:center;'>Strategy 1</p></td>";
+    html+="<td colspan='3'><p style='text-align:center;'>Strategy 2</p></td>";
+    html+="<td colspan='3'><p style='text-align:center;'>Strategy 3</p></td>";
+    html+="<td colspan='3'><p style='text-align:center;'>Strategy 4</p></td>";
+    html+="</tr>";
+
+    //headers
+    html+="<tr>";
+    html+="<td><p style='font-size:12px;' >Date</p></td>";
+    html+="<td><p style='font-size:12px;' >Away Team</p></td>";
+    html+="<td><p style='font-size:12px;' >Home Team</p></td>";
+    html+="<td><p style='font-size:12px;' >Algo proj</p></td>";
+    html+="<td><p style='font-size:12px;' >Away Proj</p></td>";
+    html+="<td><p style='font-size:12px;' >Home proj</p></td>";
+    html+="<td><p style='font-size:12px;' >Away odds</p></td>";
+    html+="<td><p style='font-size:12px;' >Home odds</p></td>";
+    html+="<td><p style='font-size:12px;' >Diff Away</p></td>";
+    html+="<td><p style='font-size:12px;' >Diff Home</p></td>";
+    html+="<td><p style='font-size:12px;' >Bet</p></td>";
+    html+="<td><p style='font-size:12px;' >To win</p></td>";
+    html+="<td><p style='font-size:12px;' >Won</p></td>";
+    html+="<td><p style='font-size:12px;' >Bet</p></td>";
+    html+="<td><p style='font-size:12px;' >To win</p></td>";
+    html+="<td style='border-right:2px solid white;'><p style='font-size:12px;' >Won</p></td>";
+    html+="<td><p style='font-size:12px;' >Bet</p></td>";
+    html+="<td><p style='font-size:12px;' >To win</p></td>";
+    html+="<td><p style='font-size:12px;' >Won</p></td>";
+    html+="<td><p style='font-size:12px;' >Bet</p></td>";
+    html+="<td><p style='font-size:12px;' >To win</p></td>";
+    html+="<td><p style='font-size:12px;' >Won</p></td>";
+    html+="<td><p style='font-size:12px;' >Bet</p></td>";
+    html+="<td><p style='font-size:12px;' >To win</p></td>";
+    html+="<td><p style='font-size:12px;' >Won</p></td>";
+    html+="<td><p style='font-size:12px;' >Bet</p></td>";
+    html+="<td><p style='font-size:12px;' >To win</p></td>";
+    html+="<td><p style='font-size:12px;' >Won</p></td>";
+    html+="</tr>";
+
+
+
+    console.log("stuff array length: "+stuff.length);
+
+    //adds content
+    var html_array=[];
+    var single_day_html="";
+    var strat_00={"profit": 0, "num_bets":0, "num_wins": 0, "num_losses": 0};
+    var strat_01={"profit": 0, "num_bets":0, "num_wins": 0, "num_losses": 0};
+    var strat_1={"profit": 0, "num_bets":0, "num_wins": 0, "num_losses": 0};
+    var strat_2={"profit": 0, "num_bets":0, "num_wins": 0, "num_losses": 0};
+    var strat_3={"profit": 0, "num_bets":0, "num_wins": 0, "num_losses": 0};
+    var strat_4={"profit": 0, "num_bets":0, "num_wins": 0, "num_losses": 0};
+    var strat_3_4={"bets": 0, "won":0, "num_bets":0, "num_wins": 0, "num_losses": 0};
+    for(var x =0; x < stuff.length; x++)
     {
-        username: $('#alert_login_username').val(),
-        password: $('#alert_login_password').val()
-    },
-    function (output)
-    {
-        $('#login_load').hide();
-        if(output=='')
-            window.location.replace(window.location);
+        //new row
+        if( (x>0 && stuff[x-1]['date']=="") || x==0)
+        {
+            //adds day of data to array, then resets day
+            html_array.push(single_day_html);
+            single_day_html="";
+            single_day_html+="<tr style='border-top:2px solid white;'>";
+        }
         else
-           display_error(output, 'bad_errors');
-    });
+            single_day_html+="<tr>";
+
+        single_day_html+="<td><p>"+stuff[x]['date']+"</p></td>";
+
+        //underlines the favorable team
+        if(parseInt(stuff[x]['algo_proj'].replace("%", ""))>0)
+        {
+            single_day_html+="<td><p style='color:rgb(150,240,250);' >"+convert_team(league, stuff[x]['away_team'])+"</p></td>";
+            single_day_html+="<td><p>"+convert_team(league, stuff[x]['home_team'])+"</p></td>";
+        }
+        else
+        {
+            single_day_html+="<td><p>"+convert_team(league, stuff[x]['away_team'])+"</p></td>";
+            single_day_html+="<td><p style='color:rgb(150,240,250);' >"+convert_team(league, stuff[x]['home_team'])+"</p></td>";
+        }
+
+        single_day_html+="<td><p>"+stuff[x]['algo_proj']+"</p></td>";
+        single_day_html+="<td><p>"+stuff[x]['away_proj']+"</p></td>";
+        single_day_html+="<td><p>"+stuff[x]['home_proj']+"</p></td>";
+
+        //adds away_odds
+        if(parseInt(stuff[x]['away_odds'])>=parseInt(stuff[x]['away_proj']))
+            single_day_html+="<td><p class='good_odds' >"+stuff[x]['away_odds']+"</p></td>";
+        else
+            single_day_html+="<td><p class='bad_odds' >"+stuff[x]['away_odds']+"</p></td>";
+
+        //adds home_odds
+        if( parseInt(stuff[x]['home_odds'])>parseInt(stuff[x]['home_proj']))
+            single_day_html+="<td><p class='good_odds' >"+stuff[x]['home_odds']+"</p></td>";
+        else
+            single_day_html+="<td><p class='bad_odds' >"+stuff[x]['home_odds']+"</p></td>";
+
+        //adds diff_away
+        if(parseInt(stuff[x]['away_odds'])>=parseInt(stuff[x]['away_proj']))
+            single_day_html+="<td><p class='good_odds' >"+stuff[x]['diff_away']+"</p></td>";
+        else
+            single_day_html+="<td><p class='bad_odds' >"+stuff[x]['diff_away']+"</p></td>";
+
+        //adds home_away
+        if( parseInt(stuff[x]['home_odds'])>parseInt(stuff[x]['home_proj']))
+            single_day_html+="<td><p class='good_odds' >"+stuff[x]['diff_home']+"</p></td>";
+        else
+            single_day_html+="<td><p class='bad_odds' >"+stuff[x]['diff_home']+"</p></td>";
+
+
+
+        /* Strategy 0.0 */
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_00_bet']+"</p></td>";
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_00_to_win']+"</p></td>";
+        if(stuff[x]['date']!="")
+        {
+            if(stuff[x]['strat_00_won']!="$0")
+            {
+                single_day_html+="<td nowrap><p class='won' >"+stuff[x]['strat_00_won']+"</p></td>";
+                if(stuff[x]['strat_00_won']!="")
+                {
+                    strat_00['num_bets']++;
+                    strat_00['num_wins']++;
+                }
+
+            }
+            else
+            {
+                single_day_html+="<td nowrap><p class='lost' >"+stuff[x]['strat_00_won']+"</p></td>";
+                strat_00['num_bets']++;
+                strat_00['num_losses']++;
+            }
+        }
+        //don't add classes if summary results row
+        else
+        {
+            if(stuff[x]['strat_00_to_win']!=""&&stuff[x]['strat_00_to_win']!=undefined)
+            {
+                var profit=parseFloat(stuff[x]['strat_00_to_win'].replace("$", ""));
+                strat_00['profit']+=profit;
+            }
+            single_day_html+="<td nowrap><p>"+stuff[x]['strat_00_won']+"</p></td>";
+        }
+
+        /* Strategy 0.1 */
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_01_bet']+"</p></td>";
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_01_to_win']+"</p></td>";
+        if(stuff[x]['date']!="")
+        {
+            if(stuff[x]['strat_01_won']!="$0")
+            {
+                single_day_html+="<td nowrap style='border-right:2px solid white;'><p class='won' >"+stuff[x]['strat_01_won']+"</p></td>";
+                if(stuff[x]['strat_01_won']!="")
+                {
+                    strat_01['num_bets']++;
+                    strat_01['num_wins']++;
+                }
+
+            }
+            else
+            {
+                single_day_html+="<td nowrap style='border-right:2px solid white;'><p class='lost' >"+stuff[x]['strat_01_won']+"</p></td>";
+                strat_01['num_bets']++;
+                strat_01['num_losses']++;
+            }
+        }
+        //don't add classes if summary results row
+        else
+        {
+            if(stuff[x]['strat_01_to_win']!=""&&stuff[x]['strat_01_to_win']!=undefined)
+            {
+                var profit=parseFloat(stuff[x]['strat_01_to_win'].replace("$", ""));
+                strat_01['profit']+=profit;
+            }
+            single_day_html+="<td nowrap style='border-right:2px solid white;'><p>"+stuff[x]['strat_01_won']+"</p></td>";
+        }
+
+
+        /* Strategy 1 */
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_1_bet']+"</p></td>";
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_1_to_win']+"</p></td>";
+        if(stuff[x]['date']!="")
+        {
+            if(stuff[x]['strat_1_won']!="$0")
+            {
+                single_day_html+="<td nowrap><p class='won' >"+stuff[x]['strat_1_won']+"</p></td>";
+                if(stuff[x]['strat_1_won']!="")
+                {
+                    strat_1['num_bets']++;
+                    strat_1['num_wins']++;
+                }
+
+            }
+            else
+            {
+                single_day_html+="<td nowrap><p class='lost' >"+stuff[x]['strat_1_won']+"</p></td>";
+                strat_1['num_bets']++;
+                strat_1['num_losses']++;
+            }
+        }
+        //don't add classes if summary results row
+        else
+        {
+            if(stuff[x]['strat_1_to_win']!=""&&stuff[x]['strat_1_to_win']!=undefined)
+            {
+                var profit=parseFloat(stuff[x]['strat_1_to_win'].replace("$", ""));
+                strat_1['profit']+=profit;
+            }
+            single_day_html+="<td nowrap><p>"+stuff[x]['strat_1_won']+"</p></td>";
+        }
+
+        /* Strategy 2 */
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_2_bet']+"</p></td>";
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_2_to_win']+"</p></td>";
+        if(stuff[x]['date']!="")
+        {
+            if(stuff[x]['strat_2_won']!="$0")
+            {
+                single_day_html+="<td nowrap><p class='won' >"+stuff[x]['strat_2_won']+"</p></td>";
+                if(stuff[x]['strat_2_won']!="")
+                {
+                    strat_2['num_bets']++;
+                    strat_2['num_wins']++;
+                }
+
+            }
+            else
+            {
+                single_day_html+="<td nowrap><p class='lost' >"+stuff[x]['strat_2_won']+"</p></td>";
+                strat_2['num_bets']++;
+                strat_2['num_losses']++;
+            }
+        }
+        //don't add classes if summary results row
+        else
+        {
+            if(stuff[x]['strat_2_to_win']!=""&&stuff[x]['strat_2_to_win']!=undefined)
+            {
+                var profit=parseFloat(stuff[x]['strat_2_to_win'].replace("$", ""));
+                strat_2['profit']+=profit;
+            }
+            single_day_html+="<td nowrap><p>"+stuff[x]['strat_2_won']+"</p></td>";
+        }
+
+
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_3_bet']+"</p></td>";
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_3_to_win']+"</p></td>";
+
+
+        if(stuff[x]['date']!="")
+        {
+            if(stuff[x]['strat_3_won']!="$0")
+            {
+                single_day_html+="<td nowrap><p class='won' >"+stuff[x]['strat_3_won']+"</p></td>";
+                if(stuff[x]['strat_3_won']!="")
+                {
+                    strat_3['num_bets']++;
+                    strat_3['num_wins']++;
+                }
+
+            }
+            else
+            {
+                single_day_html+="<td nowrap><p class='lost' >"+stuff[x]['strat_3_won']+"</p></td>";
+                strat_3['num_bets']++;
+                strat_3['num_losses']++;
+            }
+        }
+        //don't add classes if summary results row
+        else
+        {
+            if(stuff[x]['strat_3_to_win']!=""&&stuff[x]['strat_3_to_win']!=undefined)
+            {
+                var profit=parseFloat(stuff[x]['strat_3_to_win'].replace("$", ""));
+                strat_3['profit']+=profit;
+            }
+            single_day_html+="<td nowrap><p>"+stuff[x]['strat_3_won']+"</p></td>";
+        }
+
+
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_4_bet']+"</p></td>";
+        single_day_html+="<td nowrap><p>"+stuff[x]['strat_4_to_win']+"</p></td>";
+
+        if(stuff[x]['date']!="")
+        {
+            if(stuff[x]['strat_4_won']!="$0")
+            {
+                single_day_html+="<td nowrap><p class='won' >"+stuff[x]['strat_4_won']+"</p></td>";
+                if(stuff[x]['strat_4_won']!="")
+                {
+                    strat_4['num_bets']++;
+                    strat_4['num_wins']++;
+
+                    //if made a strategy 3 bet
+                    if(stuff[x]['strat_3_won']!="")
+                    {
+                        if(stuff[x]['strat_3_won']!="$0")
+                        {
+                            //console.log(stuff[x]['strat_3_bet']);
+                            var bet=parseFloat(stuff[x]['strat_3_bet'].replace("$", ""));
+                            strat_3_4['num_bets']++;
+                            strat_3_4['bets']+=bet;
+                            strat_3_4['won']+=parseFloat(stuff[x]['strat_3_won'].replace("$", ""));
+                            strat_3_4['num_wins']++;
+                        }
+                    }
+
+                }
+
+            }
+            else
+            {
+                single_day_html+="<td nowrap><p class='lost' >"+stuff[x]['strat_4_won']+"</p></td>";
+                strat_4['num_bets']++;
+                strat_4['num_losses']++;
+
+                if(stuff[x]['strat_3_bet']!="")
+                {
+                    var bet=parseFloat(stuff[x]['strat_3_bet'].replace("$", ""));
+                    //console.log(bet);
+                    strat_3_4['num_bets']++;
+                    strat_3_4['bets']+=bet
+                    strat_3_4['num_losses']++;
+                }
+            }
+        }
+        //don't add classes if summary results row
+        else
+        {
+            if(stuff[x]['strat_4_to_win']!=""&&stuff[x]['strat_4_to_win']!=undefined)
+            {
+                var profit=parseFloat(stuff[x]['strat_4_to_win'].replace("$", ""));
+                strat_4['profit']+=profit;
+            }
+            single_day_html+="<td nowrap><p>"+stuff[x]['strat_4_won']+"</p></td>";
+        }
+
+
+
+
+        single_day_html+="</tr>";
+    }
+
+    //appends remaining day
+    html_array.push(single_day_html);
+    single_day_html="";
+
+    console.log("data array length: "+html_array.length);
+
+
+    //for(var x =0; x < html_array.length; x++)
+    for(var x =html_array.length-1; x >=0; x--)
+    {
+        for(var y =0; y < html_array[x].length; y++)
+            html+=html_array[x][y];
+    }
+
+    $('#'+league+'_betting_table').html(html);
+
+
+
+
+    //sets straty table's profit
+    var base=5000;
+    $('#strat_00_base').html("$"+base);
+    $('#strat_01_base').html("$"+base);
+    $('#strat_1_base').html("$"+base);
+    $('#strat_2_base').html("$"+base);
+    $('#strat_3_base').html("$"+base);
+    $('#strat_4_base').html("$"+base);
+    $('#strat_3_4_base').html("$"+base);
+    var strat_00_rev=parseInt(base+strat_00['profit']);
+    var strat_01_rev=parseInt(base+strat_01['profit']);
+    var strat_1_rev=parseInt(base+strat_1['profit']);
+    var strat_2_rev=parseInt(base+strat_2['profit']);
+    var strat_3_rev=parseInt(base+strat_3['profit']);
+    var strat_4_rev=parseInt(base+strat_4['profit']);
+    //console.log("Won: "+strat_3_4['won']+" | bets: "+strat_3_4['bets']);
+    var strat_3_4_rev=parseInt(base+(strat_3_4['won']-strat_3_4['bets']));
+    $('#strat_00_revenue').html("$"+strat_00_rev);
+    $('#strat_01_revenue').html("$"+strat_01_rev);
+    $('#strat_1_revenue').html("$"+strat_1_rev);
+    $('#strat_2_revenue').html("$"+strat_2_rev);
+    $('#strat_3_revenue').html("$"+strat_3_rev);
+    $('#strat_4_revenue').html("$"+strat_4_rev);
+    $('#strat_3_4_revenue').html("$"+strat_3_4_rev);
+    var strat_00_perc = strat_00_rev/base*100-100;
+    var strat_01_perc = strat_01_rev/base*100-100;
+    var strat_1_perc = strat_1_rev/base*100-100;
+    var strat_2_perc = strat_2_rev/base*100-100;
+    var strat_3_perc = strat_3_rev/base*100-100;
+    var strat_4_perc = strat_4_rev/base*100-100;
+    var strat_3_4_perc = strat_3_4_rev/base*100-100;
+    $('#strat_00_perc').html(strat_00_perc.toFixed(2)+"%");
+    $('#strat_01_perc').html(strat_01_perc.toFixed(2)+"%");
+    $('#strat_1_perc').html(strat_1_perc.toFixed(2)+"%");
+    $('#strat_2_perc').html(strat_2_perc.toFixed(2)+"%");
+    $('#strat_3_perc').html(strat_3_perc.toFixed(2)+"%");
+    $('#strat_4_perc').html(strat_4_perc.toFixed(2)+"%");
+    $('#strat_3_4_perc').html(strat_3_4_perc.toFixed(2)+"%");
+    $('#strat_00_record').html(strat_00['num_wins']+"-"+strat_00['num_losses']);
+    $('#strat_01_record').html(strat_01['num_wins']+"-"+strat_01['num_losses']);
+    $('#strat_1_record').html(strat_1['num_wins']+"-"+strat_1['num_losses']);
+    $('#strat_2_record').html(strat_2['num_wins']+"-"+strat_2['num_losses']);
+    $('#strat_3_record').html(strat_3['num_wins']+"-"+strat_3['num_losses']);
+    $('#strat_4_record').html(strat_4['num_wins']+"-"+strat_4['num_losses']);
+    $('#strat_3_4_record').html(strat_3_4['num_wins']+"-"+strat_3_4['num_losses']);
+    $('#strat_00_avg_profit').html("$"+(strat_00['profit']/strat_00['num_bets']).toFixed(2));
+    $('#strat_01_avg_profit').html("$"+(strat_01['profit']/strat_01['num_bets']).toFixed(2));
+    $('#strat_1_avg_profit').html("$"+(strat_1['profit']/strat_1['num_bets']).toFixed(2));
+    $('#strat_2_avg_profit').html("$"+(strat_2['profit']/strat_2['num_bets']).toFixed(2));
+    $('#strat_3_avg_profit').html("$"+(strat_3['profit']/strat_3['num_bets']).toFixed(2));
+    $('#strat_4_avg_profit').html("$"+(strat_4['profit']/strat_4['num_bets']).toFixed(2));
+    $('#strat_3_4_avg_profit').html("$"+((strat_3_4['won']-strat_3_4['bets'])/strat_3_4['num_bets']).toFixed(2));
+    if(strat_00_perc>0)
+        $('#strat_00_perc').addClass("won");
+    else
+        $('#strat_00_perc').addClass("lost");
+    if(strat_01_perc>0)
+        $('#strat_01_perc').addClass("won");
+    else
+        $('#strat_01_perc').addClass("lost");
+    if(strat_1_perc>0)
+        $('#strat_1_perc').addClass("won");
+    else
+        $('#strat_1_perc').addClass("lost");
+    if(strat_2_perc>0)
+        $('#strat_2_perc').addClass("won");
+    else
+        $('#strat_2_perc').addClass("lost");
+    if(strat_3_perc>0)
+        $('#strat_3_perc').addClass("won");
+    else
+        $('#strat_3_perc').addClass("lost");
+    if(strat_4_perc>0)
+        $('#strat_4_perc').addClass("won");
+    else
+        $('#strat_4_perc').addClass("lost");
+    if(strat_3_4_perc>0)
+        $('#strat_3_4_perc').addClass("won");
+    else
+        $('#strat_3_4_perc').addClass("lost");
 }
+
+
+
 function get_timezone()
 {
-    var date = new Date()
+    var date = new Date();
     var timezone = date.getTimezoneOffset();
     return timezone;
 }
@@ -99,6 +524,8 @@ function display_title(id, string)
             $('.tool_tip').css({'left': (e.pageX-50), 'top': (e.pageY+20)});
     });
 }
+
+//formats user textarea text like reddit's format
 function text_format(text)
 {
     var final_text=text;
@@ -650,191 +1077,9 @@ function text_format(text)
     
     return final_text;
 }
-function convert_image(text, image_id, comment_id)
-{
-    //text EX: http://i.imgur.com/4v8spSg.jpg
-    var final_text=text;
-    
-    //if there's a link
-    if(final_text.toLowerCase().indexOf('http://imagepxl.com/')!=-1||final_text.toLowerCase().indexOf('http://i.imagepxl.com/')!=-1)
-    {
-            //gets index of beginning occurance
-            var first=final_text.toLowerCase().indexOf('http://imagepxl.com/');
-            var second=final_text.toLowerCase().indexOf('http://i.imagepxl.com/');
-            
-            if(first!=-1&&second==-1)
-                var prev_index=first;
-            else if(first==-1&&second!=-1)
-                var prev_index=second;
-            else
-            {
-                if(first<second)
-                    var prev_index=first;
-                else
-                    var prev_index=second;
-            }
-
-            //gets "http://i.imgur.com/4v8spSg.jpg ..."
-            var temp=final_text.substring(prev_index);
-            temp=temp.replace("#", '');
-            
-            //gets the end of the url
-            if(temp.indexOf(' ')!=-1||temp.indexOf("<br />")!=-1||temp.indexOf(". ")!=-1)
-            {
-                //gets " " of "http://i.imgur.com/4v8spSg.jpg ..."
-                var space=temp.indexOf(' ');
-                var line=temp.indexOf('<br />');
-                //gets the second period
-                var period=temp.indexOf('. ');
-                
-                var end=temp.indexOf(' ')+prev_index;
-                
-                if(space!=-1&&line==-1&&period==-1)
-                    var end=space+prev_index;
-                else if(space==-1&&line!=-1&&period==-1)
-                    var end=line+prev_index;
-                else if(space==-1&&line==-1&&period!=-1)
-                    var end=period+prev_index;
-                else
-                {
-                    if(space<line&&space<period)
-                        var end=space+prev_index;
-                    else if(line<space&&line<period)
-                        var end=line+prev_index;
-                    else
-                        var end=period+prev_index;
-                }
-
-                //gets the full url: "http://i.imgur.com/4v8spSg.jpg"
-                var body_text=final_text.substring(prev_index, end);
-                
-                //gets the stuff before the image
-                var front=final_text.substring(0,prev_index);
-
-                //gets the image
-                var middle="<span class='title_color username' style='font-size:12px;' id='convert_image_"+image_id+"_"+comment_id+"' >"+body_text+"</span>";
-
-                //gets the stuff after the image
-                var back=final_text.substring(end);
-
-                //removes "http://i.imgur.com/4v8spSg.jpg" and replaces it with "<img src='http://i.imgur.com/4v8spSg.jpg' />"
-                final_text=front+back+middle;
-                
-            }
-            else
-            {
-                //gets the full url: "http://i.imgur.com/4v8spSg.jpg"
-                var body_text=final_text.substring(prev_index);
-                
-                //gets the stuff before the image
-                var front=final_text.substring(0,prev_index);
-
-                //gets the image
-                var middle="<span class='title_color username' style='font-size:12px;' id='convert_image_"+image_id+"_"+comment_id+"' >"+body_text+"</span>";
 
 
-                //removes "http://i.imgur.com/4v8spSg.jpg" and replaces it with "<img src='http://i.imgur.com/4v8spSg.jpg' />"
-                final_text=front+middle;
-                
-//                //gets "/name.jpg"
-//                var body_split=body_text.split('/');
-//                var extension=body_split[body_split.length-1];
-//
-//                //gets "jpg"
-//                body_split=extension.split('.');
-//                extension=body_split[body_split.length-1];
-//                
-//                //if it's an image
-//                if( extension!=undefined && ((extension.toLowerCase()=='jpg'||extension.toLowerCase()=='png'||extension.toLowerCase()=='gif') || ( (extension==''||extension==','||extension=='!'||extension=='?') && (before_end.toLowerCase()=='jpg'|| before_end.toLowerCase()=='png' || before_end.toLowerCase()=='gif' ) ) ) )
-//                {
-//                    //gets the stuff before the image
-//                    var front=final_text.substring(0,prev_index);
-//
-//                    //gets the image and everything afterwards
-//                    var body_text=final_text.substring(prev_index);
-//
-//                    //removes "[b](and this is going to be bold)" and replaces it with <span style='font-weight:bold;'>and this is going to be bold</span>
-//                    if(type=='comment')
-//                        final_text=front+"<br /><div class='comment_picture_div' ><a class='link' href='"+body_text+"'><img class='comment_picture' src='"+body_text+"'  /></a></div>";
-//                    else if(type=='post')
-//                        final_text=front+"<br /><div class='post_picture_div' ><a class='link' href='"+body_text+"'><img class='post_picture' src='"+body_text+"'  /></a></div>";
-//                }
-            }
-    }
-    return final_text;
-//return text;
-}
-function display_dim()
-{
-    $('#dim').css({'opacity': '0'}).show();
-    $('#dim').animate({opacity:.3}, 350, function(){});
-}
-function show_alert_box()
-{
-    setTimeout(function()
-    {
-        var Document_width=($(window).width())/2;
-        
-        $('.alert_box').css({'margin-top': (-1*($('.alert_box').height()/2))});
-        $('.alert_box').css('display', 'block').animate({opacity: 1}, 350, function(){}).draggable();
-        $('.alert_box').css('left', Document_width-($('.alert_box').width()/2));
-    }, 200);
-}
-function close_alert_box()
-{
-    $('.alert_box').animate({
-        opacity: 0
-    }, 500, function()
-    {
-        $('.alert_box_inside').html('');
-        $('.alert_box').hide();
-    }).remoteAttr('width', 'height');
-    $('#dim').animate({opacity:0}, 350, function(){
-        $('#dim').hide();
-    });
-    
-}
-function display_comment_image(image_link)
-{
-    var load="<img class='load_gif' id='comment_image_load_gif' />";
-    display_alert(load);
-    
-    var url="./process_comment_image.php";
-    //checks if viewing from album
-    $.ajax({url: url, async: false, error: function() {
-                  url="../process_comment_image.php"
-            }});
-    
-    
-    $.post(url,
-    {
-        image_link: image_link
-    }, function(output)
-    {
-        var link=output.image_link;
-        var src=output.image_src;
-        
-        var image="<a class='link' href='"+link+"'><img class='display_comment_image' src='"+src+"' onloadend='show_alert_box();' /></a>";
-        display_alert(image)
-    }, "json");
-}
-function display_full_image(image_link)
-{
-    var load="<img class='load_gif' id='comment_image_load_gif' />";
-    display_alert(load);
-    var image="<img class='display_full_image' src='"+image_link+"' onClick='close_alert_box();' onloadend='show_alert_box();' />";
-    display_alert(image);
-    $('.display_full_image').css({'max-height': $(window).height()+"px", 'max-width': $(window).width()+'px'});
-    setTimeout(function(){
-        show_alert_box();
-    }, 1000);
-}
-function display_alert(body)
-{
-    display_dim();
-    $('.alert_box_inside').html(body);
-    show_alert_box();
-}
+//outputs "10 seconds ago" if seconds=10
 function convert_time(seconds)
 {
     if(seconds<2678400)
@@ -908,46 +1153,8 @@ function convert_time(seconds)
     
     return new_time;
 }
-function count_time(seconds, id, prev_time)
-{
-    if($(id).length)
-    {
-        if(prev_time==undefined)
-            prev_time="";
-        
-        seconds=parseInt(seconds);
-        if(seconds<0)
-            seconds=0;
 
-        if(seconds<2678400)
-        {
-            var new_time=convert_time(seconds);
 
-            //displays new time
-//            var old_html=$(id).html();
-//            if(new_time!=old_html)
-//                $(id).html(new_time);
-            if(new_time!=prev_time)
-            {
-                if(prev_time==''||$(id).html()==prev_time)
-                    $(id).html(new_time);
-            }
-
-            seconds++;
-
-    //        if(seconds<2678400)
-    //        {
-                //creates recursion
-                if($(id).length)
-                {
-                    setTimeout(function(){
-                        count_time(seconds, id, new_time);
-                    }, 1000);
-                }
-    //        }
-        }
-    }
-}
 function format_number(number)
 {
     var temp=number;
@@ -967,438 +1174,7 @@ function format_number(number)
     //gets overflow and subtracts to round
     return temp-number;   
 }
-function follow(user_id)
-{
-    //if user is logged in
-    if($('#logged_in_icon').length)
-    {
-        $.post('follow',
-        {
-            num:1,
-            user_id:user_id
-        }, function(output)
-        {
-            if(output!="success")
-                display_error(output, 'bad_errors');
-            else
-                window.location.replace(window.location);
-        });
-    }
-    else
-        display_login();
-        
-}
-function unfollow(user_id)
-{
-    $.post('follow',
-    {
-        num:2,
-        user_id:user_id
-    }, function(output)
-    {
-        if(output!='success')
-            display_error(output, 'bad_errors');
-        else
-            window.location.replace(window.location);
-    });
-}
-function image_over(element)
-{
-    $(element).css({'position': 'relative', 'top': '0px', 'z-index': '2', 'left': '0px'});
-    $(element).stop().animate(
-    {
-        width:'160px', 
-        top: '-5px',
-        left:'-5px'
-    }, 100, function(){});
-}
-function image_out(element)
-{
-    $(element).stop().animate(
-    {
-        top: '0px',
-        width:'150px',
-        left:'0px'
-    }, 100, function(){
-        $(element).css({'position': 'relative', 'top':'', 'z-index': '1','left':''});
-    });
-}
-function display_login()
-{
-    var login_title="<p class='title_color' >Login</p>";
-    var login_username_text="<span class='text_color' >Username: </span>";
-    var login_username="<input class='input_box' type='text' maxlength='255' placeholder='Username...' id='alert_login_username' />";
-    var login_password_text="<span class='text_color'>Password: </span>";
-    var login_password="<input class='input_box' type='password' maxlength='255' placeholder='Password...' id='alert_login_password' />";
-    var login_button="<input class='button red_button' type='button' value='Login' onClick='alert_login();' />";
-    var login_load_gif="<img class='load_gif' src='http://i.imagepxl.com/site/load.gif' id='login_load' style='display:none;' />";
-    var login_table="<table style='padding-right:15px;'><tbody><tr><td colspan='2' style='text-align:center' >"+login_title+"</td></tr><tr><td>"+login_username_text+"</td><td>"+login_username+"</td></tr><tr><td>"+login_password_text+"</td><td>"+login_password+"</td></tr><tr><td style='text-align:center;' colspan='2' >"+login_button+"</td></tr><tr><td colspan='2'>"+login_load_gif+"</td></tr></tbody></table>";
-    
-    var join_title="<p class='title_color' >Join</p>";
-    var join_username_text="<span class='text_color' >Username: </span>";
-    var join_username="<input class='input_box' type='text' maxlength='40' placeholder='Username...' id='register_username' />";
-    var join_email_text="<span class='text_color' >Email: </span>";
-    var join_email="<input class='input_box' type='email' maxlength='255' placeholder='Email...' id='register_email' />";
-    var join_password_text="<span class='text_color' >Password: </span>";
-    var join_password="<input class='input_box' type='password' maxlength='255' placeholder='Password...' id='register_password' />";
-    var join_agreement_text="<p style='font-size:12px;margin-top:10px;' class='text_color'>By joining, you agree to the </p><a class='link title_color' href='http://imagepxl.com/user_agreement' ><p class='username title_color' style='font-size:12px;' >User Agreement</p></a>";
-    var join_button="<input class='button red_button' type='button' value='Join' onClick='register();' />";
-    var join_load_gif="<img class='load_gif' src='http://i.imagepxl.com/site/load.gif' id='register_load' style='display:none;' />";
-    var join_table="<table style='padding-left:15px;'><tbody><tr><td colspan='2' style='text-align:center;' >"+join_title+"</td></tr><tr><td>"+join_username_text+"</td><td>"+join_username+"</td></tr><tr><td>"+join_email_text+"</td><td>"+join_email+"</td></tr><tr><td>"+join_password_text+"</td><td>"+join_password+"</td></tr><tr><td colspan='2' style='text-align:center' >"+join_agreement_text+"</td></tr><tr><td style='text-align:center;' colspan='2'>"+join_button+"</td></tr><tr><td colspan='2'>"+join_load_gif+"</td></tr></tbody></table>";
-    
-    var body="<table style='padding:15px;' ><tbody><tr><td style='border-right:1px solid gray;vertical-align:top;' >"+login_table+"</td><td>"+join_table+"</td></tr></tbody></table>";
-    display_alert(body);
-    $('.alert_box_inside').css('background-color', 'white');
-}
 
-function set_functions(image_id, num_likes, num_dislikes, has_liked, has_disliked, has_favorited)
-{
-    if(has_liked)
-        $('#like_unit_'+image_id).html("<img class='function_icon up_arrow' src='http://i.imagepxl.com/site/icons/up_arrow.png'/>").attr('onClick', "unlike('"+image_id+"', 'regular');");
-    else
-        $('#like_unit_'+image_id).html("<img class='function_icon up_arrow' src='http://i.imagepxl.com/site/icons/white_arrow.png'/>").attr('onClick', "like('"+image_id+"', 'regular');");
-
-    if(has_disliked)
-        $('#dislike_unit_'+image_id).html("<img class='function_icon down_arrow' src='http://i.imagepxl.com/site/icons/down_arrow.png'/>").attr('onClick', "undislike('"+image_id+"', 'regular');");
-    else
-        $('#dislike_unit_'+image_id).html("<img class='function_icon down_arrow' src='http://i.imagepxl.com/site/icons/white_arrow.png'/>").attr('onClick', "dislike('"+image_id+"', 'regular');");
-    
-    if(has_favorited)
-        $('#favorite_unit_'+image_id).html("<img class='function_icon' src='http://i.imagepxl.com/site/icons/favorite_icon.png'/>").attr('onClick', "unfavorite('"+image_id+"');");
-    else
-        $('#favorite_unit_'+image_id).html("<img class='function_icon' src='http://i.imagepxl.com/site/icons/favorite_icon_white.png'/>").attr('onClick', "favorite('"+image_id+"');");
-    
-    $('#points_unit_'+image_id).html("<span class='function_text ' style='cursor:default;' >"+(num_likes-num_dislikes)+" points</span>");
-}
-function set_interior_functions(image_id, num_likes, num_dislikes, has_liked, has_disliked)
-{
-    if(has_liked)
-        $('#like_unit_'+image_id).html("<img class='function_icon up_arrow' src='http://i.imagepxl.com/site/icons/up_arrow.png'/>").attr('onClick', "unlike('"+image_id+"', 'profile');");
-    else
-        $('#like_unit_'+image_id).html("<img class='function_icon up_arrow' src='http://i.imagepxl.com/site/icons/white_arrow.png'/>").attr('onClick', "like('"+image_id+"', 'profile');");
-
-    if(has_disliked)
-        $('#dislike_unit_'+image_id).html("<img class='function_icon down_arrow' src='http://i.imagepxl.com/site/icons/down_arrow.png'/>").attr('onClick', "undislike('"+image_id+"', 'profile');");
-    else
-        $('#dislike_unit_'+image_id).html("<img class='function_icon down_arrow' src='http://i.imagepxl.com/site/icons/white_arrow.png'/>").attr('onClick', "dislike('"+image_id+"', 'profile');");
-
-        $('#points_unit_'+image_id).html("<span class='function_text inside_function_text ' style='cursor:default;text-align:center;' >"+(num_likes-num_dislikes)+" points</span>");
-}
-function set_comment_functions(image_id, comment_id, num_likes, num_dislikes, has_liked, has_disliked)
-{
-    if(has_liked)
-        $('#comment_like_unit_'+image_id+'_'+comment_id).html("<img class='function_icon up_arrow' src='http://i.imagepxl.com/site/icons/up_arrow.png'/>").attr('onClick', "unlike_comment('"+image_id+"', "+comment_id+");");
-    else
-        $('#comment_like_unit_'+image_id+'_'+comment_id).html("<img class='function_icon up_arrow' src='http://i.imagepxl.com/site/icons/white_arrow.png'/>").attr('onClick', "like_comment('"+image_id+"', "+comment_id+");");
-
-    if(has_disliked)
-        $('#comment_dislike_unit_'+image_id+'_'+comment_id).html("<img class='function_icon down_arrow' src='http://i.imagepxl.com/site/icons/down_arrow.png'/>").attr('onClick', "undislike_comment('"+image_id+"', "+comment_id+");");
-    else
-        $('#comment_dislike_unit_'+image_id+'_'+comment_id).html("<img class='function_icon down_arrow' src='http://i.imagepxl.com/site/icons/white_arrow.png'/>").attr('onClick', "dislike_comment('"+image_id+"', "+comment_id+");");
-    
-    $('#comment_points_unit_'+image_id+'_'+comment_id).html("<span class='function_text text_color' style='cursor:default;' >"+(num_likes-num_dislikes)+" points</span>");
-}
-function like(image_id, link_type)
-{
-    //if user is logged in
-    if($('#logged_in_icon').length)
-    {
-        var url="./like_image.php";
-        //checks if viewing from album
-        $.ajax({url: url, async: false, error: function() {
-                      url="../like_image.php"
-                }});
-
-        $.post(url,
-        {
-            image_id: image_id
-        }, function(output)
-        {
-            var errors=output.errors;
-            if(errors!='')
-                display_error(errors, 'bad_errors');
-            else
-            {
-                var num_likes=output.num_likes;
-                var num_dislikes=output.num_dislikes;
-
-                if(link_type=='profile')
-                    set_interior_functions(image_id, num_likes, num_dislikes, true, false);
-                else
-                    set_functions(image_id, num_likes, num_dislikes, true, false);
-            }
-        }, "json");
-    }
-    else
-        display_login();
-}
-function dislike(image_id, link_type)
-{
-    if($('#logged_in_icon').length)
-    {
-        var url="./dislike_image.php";
-        //checks if viewing from album
-        $.ajax({url: url, async: false, error: function() {
-                      url="../dislike_image.php"
-                }});
-
-        $.post(url,
-        {
-            image_id: image_id
-        }, function(output)
-        {
-            var errors=output.errors;
-            if(errors!='')
-                display_error(errors, 'bad_errors');
-            else
-            {
-                var num_dislikes=output.num_dislikes;
-                var num_likes=output.num_likes;
-
-                if(link_type=='profile')
-                    set_interior_functions(image_id, num_likes, num_dislikes, false, true);
-                else
-                    set_functions(image_id, num_likes, num_dislikes, false, true);
-
-            }
-        }, "json");
-    }
-    else
-        display_login();
-}
-
-function unlike(image_id, link_type, text_type)
-{
-    var url="./unlike_image.php";
-    //checks if viewing from album
-    $.ajax({url: url, async: false, error: function() {
-                  url="../unlike_image.php"
-            }});
-    
-    $.post(url,
-    {
-        image_id: image_id
-    }, function(output)
-    {
-        var errors=output.errors;
-        if(errors!='')
-            display_error(errors, 'bad_errors');
-        else
-        {
-            var num_likes=output.num_likes;
-            var num_dislikes=output.num_dislikes;
-            
-            if(link_type=='profile')
-                set_interior_functions(image_id, num_likes, num_dislikes, false, false);
-            else
-                set_functions(image_id, num_likes, num_dislikes, false, false);
-        }
-    }, "json");
-}
-function undislike(image_id, link_type, text_type)
-{
-    var url="./undislike_image.php";
-    //checks if viewing from album
-    $.ajax({url: url, async: false, error: function() {
-                  url="../undislike_image.php"
-            }});
-    
-    $.post(url,
-    {
-        image_id: image_id
-    }, function(output)
-    {
-        var errors=output.errors;
-        if(errors!='')
-            display_error(errors, 'bad_errors');
-        else
-        {
-            var num_dislikes=output.num_dislikes;
-            var num_likes=output.num_likes;
-            
-            
-            if(link_type=='profile')
-                set_interior_functions(image_id, num_likes, num_dislikes, false, false);
-            else
-                set_functions(image_id, num_likes, num_dislikes, false, false);
-        }
-    }, "json");
-}
-
-function like_comment(image_id, comment_id)
-{
-    if($('#logged_in_icon').length)
-    {
-        var url="./like_comment.php";
-        //checks if viewing from album
-        $.ajax({url: url, async: false, error: function() {
-                      url="../like_comment.php"
-                }});
-
-        $.post(url,
-        {
-            image_id: image_id,
-            comment_id: comment_id
-        }, function(output)
-        {
-            var errors=output.errors;
-
-            if(errors!='')
-                display_error(errors, 'bad_errors');
-            else
-            {
-                var num_likes=output.num_likes;
-                var num_dislikes=output.num_dislikes;
-
-                set_comment_functions(image_id, comment_id, num_likes, num_dislikes, true, false);
-            }    
-        }, "json");
-    }
-    else
-        display_login();
-}
-function dislike_comment(image_id, comment_id)
-{
-    if($('#logged_in_icon').length)
-    {
-        var url="./dislike_comment.php";
-        //checks if viewing from album
-        $.ajax({url: url, async: false, error: function() {
-                      url="../dislike_comment.php"
-                }});
-
-        $.post(url,
-        {
-            image_id: image_id,
-            comment_id: comment_id
-        }, function(output)
-        {
-            var errors=output.errors;
-
-            if(errors!='')
-                display_error(errors, 'bad_errors');
-            else
-            {
-                var num_likes=output.num_likes;
-                var num_dislikes=output.num_dislikes;
-
-                set_comment_functions(image_id, comment_id, num_likes, num_dislikes, false, true);
-            }    
-        }, "json");
-    }
-    else
-        display_login();
-}
-function unlike_comment(image_id, comment_id)
-{
-    var url="./unlike_comment.php";
-    //checks if viewing from album
-    $.ajax({url: url, async: false, error: function() {
-                  url="../unlike_comment.php"
-            }});
-    
-    $.post(url,
-    {
-        image_id: image_id,
-        comment_id: comment_id
-    }, function(output)
-    {
-        var errors=output.errors;
-        
-        if(errors!='')
-            display_error(errors, 'bad_errors');
-        else
-        {
-            var num_likes=output.num_likes;
-            var num_dislikes=output.num_dislikes;
-            
-            set_comment_functions(image_id, comment_id, num_likes, num_dislikes, false, false);
-        }    
-    }, "json");
-}
-function undislike_comment(image_id, comment_id)
-{
-    var url="./undislike_comment.php";
-    //checks if viewing from album
-    $.ajax({url: url, async: false, error: function() {
-                  url="../undislike_comment.php"
-            }});
-    
-    $.post(url,
-    {
-        image_id: image_id,
-        comment_id: comment_id
-    }, function(output)
-    {
-        var errors=output.errors;
-        
-        if(errors!='')
-            display_error(errors, 'bad_errors');
-        else
-        {
-            var num_likes=output.num_likes;
-            var num_dislikes=output.num_dislikes;
-            
-            set_comment_functions(image_id, comment_id, num_likes, num_dislikes, false, false);
-        }    
-    }, "json");
-}
-function delete_comment(image_id, comment_id)
-{
-    var url="./delete_comment.php";
-    $.ajax({url: url, async: false, error: function() {
-                  url="../delete_comment.php"
-            }});
-        
-    $.post(url, 
-    {
-        image_id: image_id,
-        comment_id: comment_id
-    }, function(output)
-    {
-        if(output=='success')
-            window.location.replace(window.location);
-        else
-            display_error(output, 'bad_errors');
-    });
-}
-function comment(image_id)
-{
-    if($('#logged_in_icon').length)
-    {
-        var comment=$('#comment_input_'+image_id).val();
-        $('#comment_input_'+image_id).val('');
-
-    //    comment = comment.replace(/(\n)/gm, "");
-        if(comment!='')
-        {
-            $('#comment_load_gif').show();
-
-            var url="./comment.php";
-            //checks if viewing from album
-            $.ajax({url: url, async: false, error: function() {
-                          url="../comment.php"
-                    }});
-
-            $.post(url,
-            {
-                image_id: image_id,
-                comment: comment
-            }, function(output)
-            {
-                $('#comment_load_gif').hide();
-                if(output=="")
-                    window.location.replace(window.location);
-                else
-                    display_error(output, 'bad_errors');
-            });
-        }
-        else
-            display_error("Comment seems to be empty", 'bad_errors');
-    }
-    else
-        display_login();
-}
 
 function initialize_thumbnail_selection(image_id, width, height)
 {
@@ -1475,43 +1251,7 @@ function initialize_thumbnail_selection(image_id, width, height)
 
     $('#thumbnail_info').html("<p >Set the thumbnail for this picture</p><table><tbody><tr><td><input class='button red_button' type='button' onClick=set_picture_thumbnail('"+image_id+"'); value='Set'/></td><td><input class='button gray_button' type='button' value='Cancel' onClick='close_thumbnail_selection();'/></td></tr></tbody></table>");
 }
-function set_picture_thumbnail(image_id)
-{
-    $('#upload_image_gif').show();
-    var left=parseFloat($('.draggable_thumbnail_selector').css('left'));
-    var top=parseFloat($('.draggable_thumbnail_selector').css('top'));
 
-    var width=parseFloat($('#upload_photo_preview_image').width());
-    var height=parseFloat($('#upload_photo_preview_image').height());
-    
-    $.post('set_thumbnail.php',
-    {
-        image_id: image_id,
-        top:top,
-        left:left,
-        width:width,
-        height:height
-    }, function(output)
-    {
-        $('#upload_image_gif').hide();
-        if(output=='Thumbnail set')
-            display_error(output, 'good_errors');
-        else
-            display_error(output, 'bad_errors');
-        close_thumbnail_selection();
-    });
-}
-function close_thumbnail_selection()
-{
-    $('#upload_photo_preview').animate({
-        height:0
-    }, 1000,function()
-    {
-        $('#upload_photo_preview').html('').css('height', '').hide();
-    });
-    
-    $('#image_description_upload').show();
-}
 //id is id of element and string is message
 function display_title(id, string)
 {
@@ -1537,221 +1277,4 @@ function hide_title(id)
     {
         $('.tool_tip').html('').css({'left': '0px', 'top': '0px', 'opacity': '0'});
     });
-}
-function search()
-{
-    var search="http://imagepxl.com/search.php?search=" + encodeURIComponent($('#search_input_top').val());
-   window.location.replace(search);
-}
-function favorite(image_id)
-{
-    if($('#logged_in_icon').length)
-    {
-        var url="./favorite.php";
-        //checks if viewing from album
-        $.ajax({url: url, async: false, error: function() {
-                      url="../favorite.php"
-                }});
-
-        $.post(url,
-        {
-            image_id: image_id
-        }, function(output)
-        {
-            if(output=='')
-                $('#favorite_unit_'+image_id).html("<img class='function_icon' src='http://i.imagepxl.com/site/icons/favorite_icon.png'/>").attr('onClick', "unfavorite('"+image_id+"');");
-            else
-                display_error(output, 'bad_errors');
-
-        });
-    }
-    else
-        display_login();
-}
-function unfavorite(image_id)
-{
-    var url="./unfavorite.php";
-    //checks if viewing from album
-    $.ajax({url: url, async: false, error: function() {
-                  url="../unfavorite.php"
-            }});
-    
-    $.post(url,
-    {
-        image_id: image_id
-    }, function(output)
-    {
-        if(output=='')
-            $('#favorite_unit_'+image_id).html("<img class='function_icon' src='http://i.imagepxl.com/site/icons/favorite_icon_white.png'/>").attr('onClick', "favorite('"+image_id+"');");
-        else
-            display_error(output, 'bad_errors');
-        
-    });
-}
-function display_copy_image(image_id)
-{
-    if($('#logged_in_icon').length)
-    {
-        var url="./view_image_query.php";
-        //checks if viewing from album
-        $.ajax({url: url, async: false, error: function() {
-                      url="../view_image_query.php"
-                }});
-
-        //gets album html
-        $.post(url,
-        {
-            num:4,
-            image_id: image_id
-        }, function(output)
-        {
-            var album_ids=output.album_ids;
-            var album_names=output.album_names;
-            var current_album_id=output.current_album_id;
-
-            var html="<option value=''>--None--</option>";
-            for(var x = 0; x < album_ids.length; x++)
-            {
-                if(album_ids[x]==current_album_id)
-                    var selected="selected='selected'";
-                else
-                    var selected="";
-
-                html+="<option value='"+album_ids[x]+"' "+selected+">"+album_names[x]+"</option>";
-            }
-
-            var select_box="<select id='copy_image_album_select' >"+html+"</select>";
-
-            var button="<input class='button red_button' type='button' value='Copy' id='copy_image_button' style='float:right;'/>";
-            var description="<textarea class='input_box view_image_textarea' id='copy_image_description' placeholder='Description...' maxlength='500'></textarea>";
-            var table="<table style='padding:20px;background-color:rgba(255,255,255,.8);'><tbody><tr><td colspan='2' >"+description+"</td></tr><tr><td>"+select_box+"</td><td style='text-align:right;'>"+button+"</td></tr></tbody></table>";
-
-            display_alert(table);
-            $('#copy_image_button').attr('onClick', "copy_image('"+image_id+"');");
-        }, "json");
-    }
-    else
-        display_login();
-}
-function copy_image(image_id)
-{
-    if($('#logged_in_icon').length)
-    {
-        var url="./copy_image.php";
-        //checks if viewing from album
-        $.ajax({url: url, async: false, error: function() {
-                      url="../copy_image.php"
-                }});
-
-        $.post(url,
-        {
-            image_id: image_id,
-            description: $('#copy_image_description').val(),
-            album: $('#copy_image_album_select').val()
-        }, function(output)
-        {
-            if(output=='')
-                display_error("Image copied!", 'good_errors');
-            else
-                display_error(output, 'bad_errors');
-        });
-    }
-    else
-        display_login();
-}
-function remove_banner()
-{
-    
-}
-function theme_over(element)
-{
-    $(element).stop().animate({
-        marginTop:'-10px'
-    }, 150, function(){
-        
-    });
-}
-function theme_out(element)
-{
-    $(element).stop().animate({
-        marginTop:'0px'
-    }, 150, function(){
-        
-    });
-}
-function upload_url()
-{
-    $('#upload_image_url_gif').show();
-
-    var description=$('#image_description_url').val();
-    var url=$('#image_input').val();
-    var album=$('#album_select_url').val();
-
-    $('#image_description_url').val('');
-    $('#image_input').val('');
-    $('#album_select_url').val('');
-
-    $.post('upload_image_url.php',
-    {
-        url:url,
-        description:description,
-        album: album
-    }, function(output)
-    {
-        var errors=output.errors;
-        var image_id=output.image_id;
-
-        if($('#logged_in_icon').length==0)
-            window.location.replace('http://imagepxl.com/'+image_id);
-
-        $('#upload_image_url_gif').hide();
-        load_recent_pictures();
-        load_albums_list();
-
-        if(errors=="")
-            display_error("Image uploaded successfully", 'good_errors');
-        else
-            display_error(errors, "bad_errors");
-
-
-    }, "json");
-}
-function display_progress_bar()
-{
-    $('#percent_loaded').show();
-    $('#progress_bar').show();
-    $( "#progress_bar" ).progressbar({
-        value: 0
-    });
-    $('#percent_loaded').html("0%");
-    $('.ui-progressbar-value').css({'background': 'rgb(220,20,0)', 'border-radius': '0px' });
-}
-function display_computer_upload()
-{
-    
-    var file_input="<input type='file' id='image' name='image[]' multiple='multiple' />";
-    var description="<textarea id='image_description_upload' name='description' class='input_box textarea' placeholder='Describe the image...' maxlength='500' style='width:400px;' ></textarea>";
-    var nsfw="<span class='text_color' style='font-size:12px;'>NSFW?</span><input type='checkbox' id='nsfw' />";
-    var submit_button="<input type='submit' class='button red_button' value='Upload' id='submit' style='float:right;' /><img class='load_gif' id='upload_image_gif' src='http://i.imagepxl.com/site/load.gif' style='display: none;' />";
-                              
-    var table="<table style='width:100%;' ><tbody><tr><td id='file_input_row' colspan='3' >"+file_input+"</td></tr><tr><td colspan='3' >"+description+"</td></tr><tr><td></td><td>"+nsfw+"</td><td>"+submit_button+"</td></tr></tbody></table>";
-    var progress_bar="<div><div id='progress_bar' style='display:none' ></div><p class='text_color' id='percent_loaded'></p></div>";
-    var body="<div id='computer_upload' ><form method='post' action='upload_image.php' enctype='multipart/form-data' >"+table+"</form></div>"+progress_bar;
-    display_alert(body);
-    $('.alert_box_inside').css({'background-color': 'white', 'padding': '15px'});
-    
-    document.getElementById('submit').addEventListener('click', handleUpload);
-}
-function display_url_upload()
-{
-    var file_input="<input type='text' class='input_box' placeholder='http://example.com/image.jpg' id='image_input' style='width:300px;' />";
-    var description="<textarea id='image_description_url' class='input_box textarea' placeholder='Describe the image...' maxlength='500' style='width:400px;' ></textarea>";
-    var nsfw="<span class='text_color' style='font-size:12px;' >NSFW?</span><input type='checkbox' id='nsfw' />";
-    var submit_button="<input type='button' class='button red_button' value='Upload' style='float:right;' onClick='upload_url();' /><img class='load_gif' id='upload_image_url_gif' src='http://i.imagepxl.com/site/load.gif' style='display: none;' />";
-    
-    
-    var table="<table><tbody><tr><td id='file_input_row' colspan='3' >"+file_input+"</td></tr><tr><td colspan='3' >"+description+"</td></tr><tr><td></td><td>"+nsfw+"</td><td>"+submit_button+"</td></tr></tbody></table>";
-    var body="<div id='url_upload' >"+table+"</div>";
-    display_alert(body);
-    $('.alert_box_inside').css('background-color', 'white');
 }
