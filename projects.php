@@ -17,7 +17,7 @@ include('universal_functions.php');
 
       <meta name="description" content="SmartSoftware is an Artificial Intelligence development project" />
       <meta name="keywords" content="A.I., AI, Artificial, Intelligence, Artificial Intelligence, Machine Learning, Neural Networks, Bot, " />
-      <title>Smart Software - AI Development</title>
+      <title>Smart Software - Projects</title>
       
       <?php include('code_header.php'); ?>
       <link href="css/carousel.css" rel="stylesheet">
@@ -38,16 +38,19 @@ include('universal_functions.php');
           margin-bottom:0px;
         }
         .carousel-caption{
-          /*box-shadow:0px 0px 100px black;*/
+          box-shadow:0px 0px 50px black;
           background-color:rgba(0,0,0,0.5);
-          border-radius:50px;
-          border-bottom-left-radius:30px;
-          border-bottom-right-radius:30px;
+          border-radius:40px;
+          /*border-bottom-left-radius:30px;
+          border-bottom-right-radius:30px;*/
           right:30%;
           left:30%;
         }
         .carousel-caption p{
           text-shadow:0px 0px 5px black;
+        }
+        .carousel-inner{
+          border-bottom:1px solid rgb(100,100,100);
         }
         .carousel-inner .item img{
 
@@ -59,8 +62,9 @@ include('universal_functions.php');
           height:100%;
         }
         .marketing{
-          padding-top:20px;
-          background-color:rgba(250,250,250,0.9);
+          padding:20px;
+          /*padding-top:100px;*/
+          background-color:rgba(250,250,250,0.8);
           box-shadow:0px 0px 200px white;
         }
         .image{
@@ -76,6 +80,10 @@ include('universal_functions.php');
         .featurette-divider{
           margin:40px 0;
         }
+        .row{
+          margin-left:0px;
+          margin-right:0px;
+        }
       </style>
    </head>
    <body>
@@ -83,10 +91,7 @@ include('universal_functions.php');
        
 
 
-          <!-- Carousel
-          ================================================== -->
           <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
             <ol class="carousel-indicators">
               <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
               <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -96,9 +101,7 @@ include('universal_functions.php');
             </ol>
             <div class="carousel-inner" role="listbox">
               <div class="item active">
-                <!-- <img class="first-slide" src="http://altoday.com/wp-content/uploads/2016/02/stock-market.jpg" alt="First slide"> -->
-                <!-- <img class="first-slide" src="https://s-media-cache-ak0.pinimg.com/originals/04/f5/1c/04f51c397294b3822f739763c4c4d577.jpg" alt="First slide"> -->
-                <div class="first-slide carousel-image" style="background-image:url('images/carousel-images/stock_market/stock9.jpg');"></div>
+                <div class="first-slide carousel-image" style="background-image:url('images/carousel-images/stock_market/stock3.jpg');"></div>
                 <div class="container">
                   <div class="carousel-caption">
                     <h1>Stock Market Prediction</h1>
@@ -117,7 +120,6 @@ include('universal_functions.php');
                   </div>
                 </div>
               </div>
-
               <div class="item">
                 <div class="third-slide carousel-image" style="background-image:url('images/carousel-images/AI_poker/poker5.jpg');"></div>
                 <div class="container">
@@ -128,15 +130,13 @@ include('universal_functions.php');
                   </div>
                 </div>
               </div>
-
-
               <div class="item">
                 <div class="third-slide carousel-image" style="background-image:url('images/carousel-images/tic-tac-toe/ttt3.jpg');"></div>
                 <div class="container">
                   <div class="carousel-caption">
                     <h1>AI Tic-Tac-Toe</h1>
                     <p>Play Tic-Tac-Toe against a self-taught neural network.</p>
-                    <p><a class="btn btn-lg btn-primary" href="AI_tic-tac-toe.php" role="button">Play Against</a></p>
+                    <p><a class="btn btn-lg btn-success" href="AI_tic-tac-toe.php" role="button">Play Against</a></p>
                   </div>
                 </div>
               </div>
@@ -154,7 +154,6 @@ include('universal_functions.php');
 
 
             </div>
-            <!-- arrows -->
             <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
@@ -176,9 +175,10 @@ include('universal_functions.php');
 
             <div class="row featurette">
               <div class="col-md-7">
-                <h2 class="featurette-heading">Stock Market Prediction</h2>
+                <h1>Stock Market Prediction</h1>
                 <p class="lead">Stock prices change based off of people's buying and selling of shares, and since people's actions aren't random, the buying and selling can be predicted. Stock prices can be predicted to move up when certain criteria is met. 
                 The option algorithm predicts the price movements for option contracts in the same way the stock algorithm predicts price movements for stocks.</p>
+                <p><a class="btn btn-lg btn-default" href="stock_market.php" role="button">View Predictions</a></p>
               </div>
               <div class="col-md-5 image" >
                 <a href="stock_market.php"><img class="featurette-image img-responsive center-block" src="images/carousel-images/stock_market/stock10.jpg"></a>
@@ -189,8 +189,9 @@ include('universal_functions.php');
 
             <div class="row featurette">
               <div class="col-md-7">
-                <h2 class="featurette-heading">Sports Prediction</h2>
+                <h1>Sports Prediction</h1>
                 <p class="lead">Algorithms are used to predict which team will win in a game, and their chance of winning. This can be used to win sports bets. Sports leagues: NBA, NHL, and MLB. </p>
+                <p><a class="btn btn-lg btn-default" href="sports.php" role="button">View Predictions</a></p>
               </div>
               <div class="col-md-5 image" >
                 <a href="sports.php"><img class="featurette-image img-responsive center-block" src="images/carousel-images/sports_betting/sports6.jpg"></a>
@@ -201,8 +202,9 @@ include('universal_functions.php');
 
             <div class="row featurette">
               <div class="col-md-7">
-                <h2 class="featurette-heading">AI Poker</h2>
-                <p class="lead"></p>
+                <h1>AI Poker</h1>
+                <p class="lead">Texas Holdem poker is a game if skill and luck, and this AI will have the skill to beat many poker players. It learns from playing against other visitors, so it's better every time you visit.</p>
+                <p><a class="btn btn-lg btn-default disabled" href="" role="button">Available Soon</a></p>
               </div>
               <div class="col-md-5 image" >
                 <img class="featurette-image img-responsive center-block" src="images/carousel-images/AI_poker/poker4.jpg">
@@ -213,11 +215,12 @@ include('universal_functions.php');
 
             <div class="row featurette">
               <div class="col-md-7">
-                <h2 class="featurette-heading">AI Tic-Tac-Toe</h2>
-                <p class="lead"></p>
+                <h1>AI Tic-Tac-Toe</h1>
+                <p class="lead">Play tic-tac-toe against an AI that learns as you play. Have the AI play against itself so that it can learn, and it will then be beating human players. </p>
+                <p><a class="btn btn-lg btn-default" href="ttt.php" role="button">Play Tic-Tac-Toe</a></p>
               </div>
               <div class="col-md-5 image" >
-                <a href=""><img class="featurette-image img-responsive center-block" src="images/carousel-images/tic-tac-toe/ttt2.png"></a>
+                <a href="ttt.php"><img class="featurette-image img-responsive center-block" src="images/carousel-images/tic-tac-toe/ttt3.jpg"></a>
               </div>
             </div>
 
@@ -225,8 +228,9 @@ include('universal_functions.php');
 
             <div class="row featurette">
               <div class="col-md-7">
-                <h2 class="featurette-heading">AI Ultimate Tic-Tac-Toe</h2>
-                <p class="lead"></p>
+                <h1>AI Ultimate Tic-Tac-Toe</h1>
+                <p class="lead">Play Ultimate tic-tac-toe against an AI that learns as you play. It can learn by playing against itself, like the regular tic-tac-toe AI, and it will then be beating human players.</p>
+                <p><a class="btn btn-lg btn-default disabled" href="" role="button">Available Soon</a></p>
               </div>
               <div class="col-md-5 image" >
                 <img class="featurette-image img-responsive center-block" src="images/carousel-images/ultimate-tic-tac-toe/uttt2.jpg">

@@ -2,7 +2,7 @@
 
 
 
-<link href='https://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'>
+<!-- <link href='https://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'> -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- <link href="css/jumbotron.css" rel="stylesheet"> -->
 <link rel="stylesheet" type="text/css" href="css/main.css" />

@@ -10,13 +10,27 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.php">Smart Software</a>
+
+        <a href="index.php" ><table>
+          <tbody>
+            <tr>
+              <td>
+                <span class="navbar-brand" style="padding-right:5px;font-size:20px;font-weight:bold;">Smart Software</span>
+              </td>
+              <td>
+                <img src="favicon.ico" style="height:25px;"/>
+              </td>
+            </tr>
+          </tbody>
+        </table></a>
+
+        
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <!-- <li class="active"><a href="#">Home</a></li> -->
-          <li><a href="projects">Projects</a></li>
-          <li><a href="about">About</a></li>
+          <li><a href="projects.php">Projects</a></li>
+          <li><a href="about.php">About</a></li>
           <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
             <ul class="dropdown-menu">

@@ -37,9 +37,14 @@ if(!empty($_GET['season']))
                 if(view=="overview")
                 {
                     $('#overview').show();
-                    $('#nba').hide();
-                    $('#nhl').hide();
+                    // $('#nba').hide();
+                    // $('#nhl').hide();
                     $('#mlb').hide();
+
+                    $('#nba_seasons').hide();
+                    $('#nba_overview_seasons').hide();
+                    $('#nhl_seasons').hide();
+                    $('#nhl_overview_seasons').hide();
 
                     //hides seasons links and removes hrefs
                     $("#seasons_list").hide();
@@ -62,6 +67,8 @@ if(!empty($_GET['season']))
                     $('#nba').hide();
                     $('#nhl').show();
                     $('#mlb').hide();
+
+                    displayNHL();
                 }
                 else if(view=="mlb")
                 {
@@ -87,17 +94,50 @@ if(!empty($_GET['season']))
             function displayNBA()
             {
                 if("<?php echo $season ?>"=="")
-                {
                     $('#nba_seasons').hide();
-                }
                 else
                 {
-                    $('#nba_all').hide();
-                    $("#nba_header").html("Basketball (NBA) predictions for <?php echo $season; ?>"); 
+                    $('#nba_info').hide();
+                    $("#nba_header").html("Basketball (NBA) predictions for <?php echo $season; ?> season"); 
+                    $("#nhl_panel_header").html("<?php echo $season; ?> Playoffs Prediction and Results");
+
+                    $('#nba_<?php echo $season; ?>_series_predictions').show();
                 }
 
                 var data = get_betting_data("nba");
                 make_betting_table("nba", data);
+            }
+
+            function displayNHL()
+            {
+                if("<?php echo $season ?>"=="")
+                    $('#nhl_seasons').hide();
+                else
+                {
+                    $('#nhl_info').hide();
+                    $("#nhl_header").html("Hockey (NHL) predictions for <?php echo $season; ?> season"); 
+                    $("#nhl_panel_header").html("<?php echo $season; ?> Playoffs Prediction and Results");
+                    $('#nhl_bracket_prediction').attr("src", "betting_content/nhl/NHL_<?php echo $season; ?>_bracket.PNG");
+                    $('#nhl_bracket_result').attr("src", "betting_content/nhl/NHL_<?php echo $season; ?>_bracket_results.PNG");
+
+                    $('#nhl_<?php echo $season; ?>_series_predictions').show();
+
+                    <?php 
+                        if($season=="2017")
+                        {
+                            echo "$('#nhl_prediction_cell').css('vertical-align', 'top');";
+                            echo "$('#playoffs_bracket_images').show();";
+                        }
+                        else if($season=="2016")
+                        {
+                            echo "$('#nhl_prediction_cell').css('vertical-align', 'bottom');";
+                            echo "$('#playoffs_bracket_images').show();";
+                        } 
+                    ?>
+                }
+
+                // var data = get_betting_data("nhl");
+                // make_betting_table("nhl", data);
             }
             
 
@@ -201,6 +241,56 @@ if(!empty($_GET['season']))
                           return "";
                       }
                   }
+                  // else if(league=="nhl")
+                  //   {
+                  //       var team_names = {
+                  //           "ana" : "anaheim-ducks",
+                  //           "ari" : "arizona-coyotes",
+                  //           "bos" : "boston-bruins",
+                  //           "buf" : "buffalo-sabres",
+                  //           "cgy" : "calgary-flames",
+                  //           "car" : "carolina-hurricanes",
+                  //           "chi" : "chicago-blackhawks",
+                  //           "col" : "colorado-avalanche",
+                  //           "cbj" : "columbus-blue-jackets",
+                  //           "dal" : "dallas-stars",
+                  //           "det" : "detroit-red-wings",
+                  //           "edm" : "edmonton-oilers",
+                  //           "fla" : "florida-panthers",
+                  //           "la" : "los-angeles-kings",
+                  //           "min" : "minnesota-wild",
+                  //           "mtl" : "montreal-canadiens",
+                  //           "nsh" : "nashville-predators",
+                  //           "nj" : "new-jersey-devils",
+                  //           "nyi" : "new-york-islanders",
+                  //           "nyr" : "new-york-rangers",
+                  //           "ott" : "ottawa-senators",
+                  //           "phi" : "philadelphia-flyers",
+                  //           "pit" : "pittsburgh-penguins",
+                  //           "sj" : "san-jose-sharks",
+                  //           "stl" : "st-louis-blues",
+                  //           "tb" : "tampa-bay-lightning",
+                  //           "tor" : "toronto-maple-leafs",
+                  //           "van" : "vancouver-canucks",
+                  //           "wsh" : "washington-capitals",
+                  //           "wpg" : "winnipeg-jets"
+                  //         };
+                  //         //converts "lal" to "los-angeles-lakers"
+                  //         if(team_name in team_names)
+                  //         {
+                  //             return team_names[team_name];
+                  //         }
+                  //         //converts "los-angeles-lakers" to "lal"
+                  //         else
+                  //         {
+                  //             for(var key in team_names)
+                  //             {
+                  //                 if(team_names[key] == team_name)
+                  //                     return key;
+                  //             }
+                  //             return "";
+                  //         }
+                  //     }
                   
             }
             
@@ -212,6 +302,9 @@ if(!empty($_GET['season']))
             .left_column{
                 white-space:nowrap;
                 font-weight:bold;
+            }
+            .panel{
+                display:inline-block;
             }
         </style>
     </head>
@@ -225,23 +318,25 @@ if(!empty($_GET['season']))
              <!-- sidebar -->
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
-                <li><p style="font-weight:bold;font-size:20px;padding-left:20px;padding-right:20px;">Sports Games Predictor</p></li>
+                <li><p style="font-weight:bold;font-size:16px;padding-left:20px;padding-right:20px;">Sports Games Predictor</p></li>
                 <li <?php if($view=="overview") echo "class='active'"; ?> ><a href="?view=overview">Overview</a></li>
                 <li <?php if($view=="nba") echo "class='active'"; ?> ><a href="?view=nba">Basketball (NBA)</a></li>
                 <li <?php if($view=="nhl") echo "class='active'"; ?> ><a href="?view=nhl">Hockey (NHL)</a></li>
                 <li <?php if($view=="mlb") echo "class='active'"; ?> ><a href="?view=mlb">Baseball (MLB)</a></li>
               </ul>
+              <hr />
               <ul class="nav nav-sidebar" id="seasons_list">
                 <li <?php if($season=="") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>">Info</a></li>   
-                <li <?php if($season=="all") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=all">All Seasons</a></li>
-                <li <?php if($season=="2016") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2016">2016</a></li>
-                <li <?php if($season=="2015") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2015">2015</a></li>
-                <li <?php if($season=="2014") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2014">2014</a></li>
-                <li <?php if($season=="2013") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2013">2013</a></li>
-                <li <?php if($season=="2012") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2012">2012</a></li>
-                <li <?php if($season=="2011") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2011">2011</a></li>
-                <li <?php if($season=="2010") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2010">2010</a></li>
-                <li <?php if($season=="2009") echo "class='active'"; ?> ><a href="?view=<?php echo $view; ?>&season=2009">2009</a></li>
+                <!-- <li <?php if($season=="all") echo "class='active'";   if($view=="nhl") echo "style='display:none;'"; ?> ><a href="?view=<?php echo $view; ?>&season=all">All Seasons</a></li> -->
+                <li <?php if($season=="2017") echo "class='active'";   ?> ><a href="?view=<?php echo $view; ?>&season=2017">2017</a></li>
+                <li <?php if($season=="2016") echo "class='active'";   ?> ><a href="?view=<?php echo $view; ?>&season=2016">2016</a></li>
+                <li <?php if($season=="2015") echo "class='active'";   ?> ><a href="?view=<?php echo $view; ?>&season=2015">2015</a></li>
+                <li <?php if($season=="2014") echo "class='active'";   ?> ><a href="?view=<?php echo $view; ?>&season=2014">2014</a></li>
+                <li <?php if($season=="2013") echo "class='active'";   ?> ><a href="?view=<?php echo $view; ?>&season=2013">2013</a></li>
+                <li <?php if($season=="2012") echo "class='active'";   ?> ><a href="?view=<?php echo $view; ?>&season=2012">2012</a></li>
+                <li <?php if($season=="2011") echo "class='active'";   if($view=="nhl") echo "style='display:none;'"; ?> ><a href="?view=<?php echo $view; ?>&season=2011">2011</a></li>
+                <li <?php if($season=="2010") echo "class='active'";   if($view=="nhl") echo "style='display:none;'"; ?> ><a href="?view=<?php echo $view; ?>&season=2010">2010</a></li>
+                <li <?php if($season=="2009") echo "class='active'";   if($view=="nhl") echo "style='display:none;'"; ?> ><a href="?view=<?php echo $view; ?>&season=2009">2009</a></li>
               </ul>
               <!--
               <ul class="nav nav-sidebar">
@@ -256,16 +351,65 @@ if(!empty($_GET['season']))
             <!-- overview content -->
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="overview">
                 <h1 class="page-header" >Overview</h1>
-                <p>Sports games outcomes can be modeled using algorithms, and the user can then place betss that give them the best long-term odds. The program will outcome a percentage chance of the favorable team to win, and the corresponding odds (ex: -145). If odds makers give odds that are less than the prediction, that means the program believes the favorable team has a higher chance of winning than the oddsmakers think. It would be in the user's best interest to place a bet on the favorable team. </p>
+                <p>Sports games outcomes can be modeled using algorithms, and the user can then place bets that give them the best long-term odds. The program will outcome a percentage chance of the favorable team to win, and the corresponding odds (ex: -145). If odds makers give odds that are less than the prediction, that means the program believes the favorable team has a higher chance of winning than the oddsmakers think. It would be in the user's best interest to place a bet on the favorable team. </p>
                 
             </div>
 
-            <!-- Option algorithm content -->
+            <!-- nba content -->
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="nba">
                 <h1 class="page-header" id="nba_header">Basketball (NBA) predictions</h1>
 
-                <div id="nba_all">
-                        <p>An algorithm is used to predict which NBA team is favorable to win a game, and by how much. Bets are placed if odds are favorable for long-term reward.</p>
+                <div id="nba_info">
+
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Prediction Results for all seasons</div>
+
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Series predicted correctly:</td>
+                                    <td>61/90</td>
+                                    <td>67%</td>
+                                </tr>
+                                <tr>
+                                    <td>Round 1:</td>
+                                    <td>31/48</td>
+                                    <td>65%</td>
+                                </tr>
+                                <tr>
+                                    <td>Round 2:</td>
+                                    <td>18/24</td>
+                                    <td>75%</td>
+                                </tr>
+                                <tr>
+                                    <td>Conference:</td>
+                                    <td>7/12</td>
+                                    <td>58%</td>
+                                </tr>
+                                <tr>
+                                    <td>Final:</td>
+                                    <td>3/6</td>
+                                    <td>50%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="nba_overview_seasons">
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2017.php"); ?>
+                        <?php include("./betting_content/nba/seasons/nba_2016.php"); ?>
+                        <?php include("./betting_content/nba/seasons/nba_2015.php"); ?>
+                        <?php include("./betting_content/nba/seasons/nba_2014.php"); ?>
+                        <?php include("./betting_content/nba/seasons/nba_2013.php"); ?>
+                        <?php include("./betting_content/nba/seasons/nba_2012.php"); ?>
+                        <?php include("./betting_content/nba/seasons/nba_2011.php"); ?>
+                    </div>
+
+                        <!-- <p>An algorithm is used to predict which NBA team is favorable to win a game, and by how much. Bets are placed if odds are favorable for long-term reward.</p>
                         <p>Columns:</p>
                         <div class="table-responsive thin_table">
                             <table class="table table-bordered definition-table">
@@ -361,13 +505,13 @@ if(!empty($_GET['season']))
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                 </div>
 
                 <div id="nba_seasons">
 
                     <!-- displays backtest results -->
-                    <div class="graph_container" style="display:inline-block">
+                    <!-- <div class="graph_container" style="display:inline-block">
                        <div style="padding:20px;">
                            <table>
                                <tbody>
@@ -400,10 +544,10 @@ if(!empty($_GET['season']))
                                </tbody>
                            </table>
                        </div>
-                   </div>
+                   </div> -->
                    
                     <!-- displays more backtest results -->
-                   <div class="graph_container" style="display:inline-block">
+                   <!-- <div class="graph_container" style="display:inline-block">
                        
                        <div style="padding:20px;">
                            <table>
@@ -475,17 +619,791 @@ if(!empty($_GET['season']))
                            
                            
                        </div>
-                   </div>
+                   </div> -->
                    
                    <!-- actual betting results -->
-                   <div class="table-responsive">
+                   <!-- <div class="table-responsive">
                         <table class="table table-bordered definition-table" id="nba_betting_table" style="width:100%;margin-top:20px;">
 
+                        </table>
+                    </div> -->
+
+                    <h4>Series Predictions:</h4>
+                    
+
+                    <div id="nba_2017_series_predictions" style="display:none;">
+                        
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2017 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>1/1</td>
+                                        <td>100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>1/1</td>
+                                        <td>100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2017.php"); ?>
+
+                    </div>
+
+                    <div id="nba_2016_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2016 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>11/15</td>
+                                        <td>73%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>6/8</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>3/4</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>2/2</td>
+                                        <td>100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>0/1</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2016.php"); ?>
+
+                        
+
+                    </div>
+
+                    <div id="nba_2015_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2015 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>10/15</td>
+                                        <td>67%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>5/8</td>
+                                        <td>63%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>3/4</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>1/2</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>1/1</td>
+                                        <td>100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2015.php"); ?>
+
+                        
+                    </div>
+
+
+                    <div id="nba_2014_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2014 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>12/15</td>
+                                        <td>80%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>6/8</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>3/4</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>2/2</td>
+                                        <td>100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>1/1</td>
+                                        <td>100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2014.php"); ?>
+
+                    
+                    </div>
+
+
+                    <div id="nba_2013_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2013 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>10/15</td>
+                                        <td>67%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>6/8</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>2/4</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>1/2</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>1/1</td>
+                                        <td>100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2013.php"); ?>
+
+                        
+                    </div>
+
+
+                    <div id="nba_2012_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2012 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>8/15</td>
+                                        <td>53%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>4/8</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>3/4</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>1/2</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>0/1</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2012.php"); ?>
+
+                        
+                    </div>
+
+                    <div id="nba_2011_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2011 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>10/15</td>
+                                        <td>67%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>6/8</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>4/4</td>
+                                        <td>100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>0/2</td>
+                                        <td>0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>0/1</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nba/seasons/nba_2011.php"); ?>
+
+                        
+                    </div>
+
+
+                    <div id="nba_2010_series_predictions" style="display:none;">
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <ul class="list-group panel panel-default" style="border:none">
+                                            <li class="list-group-item panel-heading">Round 1 Western</li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item panel-heading">Round 1 Eastern</li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="list-group panel panel-default" style="border:none">
+                                            <li class="list-group-item panel-heading">Round 2 Western</li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item panel-heading">Round 2 Eastern</li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item"></li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="list-group panel panel-default" style="border:none">
+                                            <li class="list-group-item panel-heading">Western Conference</li>
+                                            <li class="list-group-item"></li>
+                                            <li class="list-group-item panel-heading">Eastern Conference</li>
+                                            <li class="list-group-item"></li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="list-group panel panel-default" style="border:none">
+                                            <li class="list-group-item panel-heading">NBA Champion</li>
+                                            <li class="list-group-item"></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
 
 
+
+
+
                 </div>
+
+                                
+            </div>
+
+
+            <!-- nha content -->
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="nhl">
+                <h1 class="page-header" id="nba_header">Hockey (NHL) predictions</h1>
+
+                
+                <div id="nhl_info">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Prediction Results for all seasons</div>
+
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Series predicted correctly:</td>
+                                    <td>36/62</td>
+                                    <td>58%</td>
+                                </tr>
+                                <tr>
+                                    <td>Round 1:</td>
+                                    <td>21/35</td>
+                                    <td>60%</td>
+                                </tr>
+                                <tr>
+                                    <td>Round 2:</td>
+                                    <td>10/15</td>
+                                    <td>67%</td>
+                                </tr>
+                                <tr>
+                                    <td>Conference:</td>
+                                    <td>3/8</td>
+                                    <td>38%</td>
+                                </tr>
+                                <tr>
+                                    <td>Final:</td>
+                                    <td>2/4</td>
+                                    <td>50%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="nhl_overview_seasons">
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2017.php"); ?>
+                        <?php include("./betting_content/nhl/seasons/nhl_2016.php"); ?>
+                        <?php include("./betting_content/nhl/seasons/nhl_2015.php"); ?>
+                        <?php include("./betting_content/nhl/seasons/nhl_2014.php"); ?>
+                        <?php include("./betting_content/nhl/seasons/nhl_2013.php"); ?>
+                        <?php include("./betting_content/nhl/seasons/nhl_2012.php"); ?>
+                    </div>
+
+
+                </div>
+
+                <div id="nhl_seasons">
+
+                    <h4>Series Predictions:</h4>
+                    <!-- <p>Bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                    Green indicates a correct series prediction, and red indicates an incorrect prediction.</p> -->
+
+                    
+
+                    <div id="nhl_2017_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2017 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>4/6</td>
+                                        <td>67%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>4/6</td>
+                                        <td>67%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2017.php"); ?>
+
+                    </div>
+
+                    <div id="nhl_2016_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2016 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>10/15</td>
+                                        <td>67%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>5/8</td>
+                                        <td>63%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>3/4</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>1/2</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>1/1</td>
+                                        <td>100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2016.php"); ?>
+                    </div>
+
+
+                    <div id="nhl_2015_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2015 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>10/15</td>
+                                        <td>67%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>7/8</td>
+                                        <td>88%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>3/4</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>0/2</td>
+                                        <td>0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>0/1</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2015.php"); ?>
+                    </div>
+
+                    <div id="nhl_2014_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2014 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>6/15</td>
+                                        <td>40%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>4/8</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>1/4</td>
+                                        <td>25%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>1/2</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>0/1</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2014.php"); ?>
+                    </div>
+
+                    <div id="nhl_2013_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2013 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>8/14</td>
+                                        <td>57%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>3/8</td>
+                                        <td>38%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>3/3</td>
+                                        <td>100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>1/2</td>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>1/1</td>
+                                        <td>100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2013.php"); ?>                     
+                    </div>
+
+                    
+                    <div id="nhl_2012_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2012 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>/15</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>/8</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>/4</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>/2</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>/1</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2012.php"); ?>
+                        
+                    </div>
+
+
+                    <div id="nhl_2011_series_predictions" style="display:none;">
+
+                        <div class="panel panel-default">
+                          <div class="panel-heading">2011 Prediction Results</div>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Series predicted correctly:</td>
+                                        <td>/15</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 1:</td>
+                                        <td>/8</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Round 2:</td>
+                                        <td>/4</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conference:</td>
+                                        <td>/2</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final:</td>
+                                        <td>/1</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>Below, bold is the team picked by the algorithm. Series score is on the right of the teams. 
+                        Green indicates a correct series prediction, and red indicates an incorrect prediction.</p>
+                        <p>If a prediction is incorrect, the next round is recalculated with the new winning team.</p>
+
+                        <?php include("./betting_content/nhl/seasons/nhl_2011.php"); ?>
+                        
+                    </div>
+
+
+
+
+                    <div class="panel panel-primary" id="playoffs_bracket_images" style="display:none;">
+                      <div class="panel-heading" id="nhl_panel_header">2016 Playoffs Prediction and Results</div>
+                      <table>
+                          <tbody>
+                              <tr>
+                                  <td id="nhl_prediction_cell">
+                                      <img id="nhl_bracket_prediction" src="" style="max-width:100%;"/>
+                                  </td>
+                                  <td>
+                                      <img id="nhl_bracket_result" src="" style="width:100%;"/>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                    </div>
+
+
+
+                </div>
+
+                
 
                                 
             </div>

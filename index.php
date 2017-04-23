@@ -30,15 +30,22 @@ include('universal_functions.php');
       <style>
         
         footer{
+          /*color:rgb(50,50,50);*/
+          color:white;
+        }
+        #header_table{
+          margin:0 auto;
+          display:inline;
           color:rgb(50,50,50);
-
         }
         .cover{
-          background:rgba(250,250,250,0.8);
-          padding:20px;
-          border-radius:50px;
-          box-shadow:0px 0px 50px rgb(200,200,200);
-          /*text-shadow:0px 0px 1px black;*/
+          background:rgba(250,250,250,0.9);
+          padding:10px;
+          padding-left:20px;
+          padding-right:20px;
+          border-radius:20px;
+          border:1px solid rgb(150,150,150);
+          box-shadow:inset 0px 0px 5px rgb(200,200,200);
           text-shadow:none;
           color:rgb(50,50,50);
         }
@@ -99,10 +106,24 @@ include('universal_functions.php');
 
 
             <div class="inner cover">
-              <h1 class="cover-heading">Smart Software</h1>
-              <p class="lead">Artificial Intelligence is the most powerful tool humanity could ever have, and we're trying to make that a reality.</p>
+              
+              <table id="header_table">
+                <tbody>
+                  <tr>
+                    <td>
+                      <h1 class="cover-heading">Smart Software</h1>
+                    </td>
+                    <td>
+                      <img src="favicon.ico" style="height:36px"/>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              
+              <p class="lead">Artificial Intelligence will be humanity's most powerful tool, and we're trying to make that a reality.</p>
               <p class="lead">
-                <a href="projects" class="btn btn-lg btn-default">View Projects</a>
+                <a href="projects.php" class="btn btn-lg btn-default">View Projects</a>
               </p>
             </div>
 
