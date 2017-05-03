@@ -136,7 +136,7 @@ include('universal_functions.php');
                   <div class="carousel-caption">
                     <h1>AI Tic-Tac-Toe</h1>
                     <p>Play Tic-Tac-Toe against a self-taught neural network.</p>
-                    <p><a class="btn btn-lg btn-success" href="AI_tic-tac-toe.php" role="button">Play Against</a></p>
+                    <p><a class="btn btn-lg btn-success" href="tic-tac-toe.php" role="button">Play Against</a></p>
                   </div>
                 </div>
               </div>
@@ -217,10 +217,10 @@ include('universal_functions.php');
               <div class="col-md-7">
                 <h1>AI Tic-Tac-Toe</h1>
                 <p class="lead">Play tic-tac-toe against an AI that learns as you play. Have the AI play against itself so that it can learn, and it will then be beating human players. </p>
-                <p><a class="btn btn-lg btn-default" href="ttt.php" role="button">Play Tic-Tac-Toe</a></p>
+                <p><a class="btn btn-lg btn-default" href="tic-tac-toe.php" role="button">Play Tic-Tac-Toe</a></p>
               </div>
               <div class="col-md-5 image" >
-                <a href="ttt.php"><img class="featurette-image img-responsive center-block" src="images/carousel-images/tic-tac-toe/ttt3.jpg"></a>
+                <a href="tic-tac-toe.php"><img class="featurette-image img-responsive center-block" src="images/carousel-images/tic-tac-toe/ttt3.jpg"></a>
               </div>
             </div>
 

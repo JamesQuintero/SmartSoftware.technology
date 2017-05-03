@@ -21,3 +21,22 @@ function log_IP($file_name)
 }
 
 
+//returns file contents in array format
+function read_file($path)
+{
+    $contents=array();
+
+    $handle = fopen($path, "r");
+    if ($handle)
+    {
+        while (($line = fgets($handle)) !== false)
+        {
+            // process the line read.
+            $contents[] = $line;
+        }
+
+        fclose($handle);
+    }
+
+    return $contents;
+}
