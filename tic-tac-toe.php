@@ -58,17 +58,22 @@ if(!isset($_COOKIE['game_id']))
 
 
             var AI_interval;
+            var game_interval;
 
 
             function ttt(AIDifficulty)
             {
+                $('#game_result').html("");
+
                 //start new game
                 startGame(AIDifficulty);
 
                 //initializes jquery for board functionality
                 resetBoardFunctions();
 
-                AIMoveInteveral();
+                AIMoveInterval();
+                gameInterval();
+
             }
 
             //starts player vs AI ttt game with AI having AIDifficulty (0 = easy, 1 = hard)
@@ -107,10 +112,18 @@ if(!isset($_COOKIE['game_id']))
             }
 
             //checks if AI has moved every .5 seconds
-            function AIMoveInteveral()
+            function AIMoveInterval()
             {
-                myVar = setInterval(function(){
+                AI_interval = setInterval(function(){
                     loadAIMove();
+                }, 500);
+            }
+
+            //checks if game was won
+            function gameInterval()
+            {
+                game_interval = setInterval(function(){
+                    checkForGameCompletion();
                 }, 500);
             }
 
@@ -128,20 +141,32 @@ if(!isset($_COOKIE['game_id']))
                   success: function(output)
                   {
                     var new_move = output.new_move;
+                    var board = output.board;
 
                     //AI has actually made a move
                     if(new_move!="")
                     {
+                      console.log("New move: "+new_move);
+
+                        //sets piece down since there's a lag when setting the whole board
                         $('#slot_'+new_move).html("<p class='ttt_piece'>X</p>");
+                        board[new_move]=1;
+                        //sets the whole board
+                        setBoard(board);
+
                         //stop AI move checking
-                        clearInterval(myVar);
+                        clearInterval(AI_interval);
 
                         resetBoardFunctions();
+                        checkForGameCompletion();
+
                     }
                     else
                         console.log("Waiting for AI's move");
                   }
                 });
+
+                
             }
 
             //player moved in slot specified by move
@@ -162,13 +187,22 @@ if(!isset($_COOKIE['game_id']))
                     // var board=output.board;
                     var message = output.message;
                     var error = output.error;
+                    var board = output.board;
+
+                    console.log(board);
 
                     if(message=="success")
                     {
+                        //sets piece down since there's a lag when setting the whole board
                         $('#slot_'+move).html("<p class='ttt_piece'>O</p>");
-
+                        board[move]=2;
+                        //sets the whole board
+                        setBoard(board);
 
                         resetBoardFunctions();
+                        AIMoveInterval();
+
+                        checkForGameCompletion();
                     }
                     else
                     {
@@ -178,6 +212,85 @@ if(!isset($_COOKIE['game_id']))
                   }
                 });
 
+            }
+
+            //checks if the game was won or tied
+            function checkForGameCompletion()
+            {
+               $.ajax({
+                  type: 'POST',
+                  url: "ttt.php",
+                  data: {
+                    function: 5
+                  },
+                  dataType: "json",
+                  async:false,
+                  success: function(output)
+                  {
+                    var game_result = output.game_result;
+
+                    //if game has ended
+                    if(game_result!="")
+                    {
+                        console.log("game result: "+game_result);
+
+                        //game tied
+                        if(game_result==0)
+                        {
+                            $('#game_result').html("It's a tie");
+                        }
+                        //player won
+                        else if(game_result==1)
+                        {
+                            $('#game_result').html("You won!");
+                        }
+                        //AI won
+                        else if(game_result==2)
+                        {
+                            $('#game_result').html("The AI won!");
+                        }
+                        //user quit
+                        else
+                            $('#game_result').html("Game stopped");
+
+
+                        //removes board functions
+                        for(var x =0; x < 9; x++)
+                        {
+                            $('#slot_'+x).attr("onClick", "");
+                            $('#slot_'+x).attr("class", "");
+                        }
+
+                        //stop AI move checking
+                        clearInterval(AI_interval);
+                        clearInterval(game_interval);
+
+                    }
+                    else
+                        console.log("Checking for game completion");
+                  }
+                });
+            }
+
+            //sets board to what is returned from the program
+            function setBoard(board)
+            {
+                console.log("Setting board: ");
+                for(var x =0; x < board.length; x++)
+                {
+                    if(board[x]!=0)
+                    {
+                      if(board[x]==1)
+                        $('#slot_'+x).html("<p class='ttt_piece'>X</p>");
+                      else if(board[x]==2)
+                        $('#slot_'+x).html("<p class='ttt_piece'>O</p>");
+                    }
+                    else
+                      $('#slot_'+x).html("");
+
+                    console.log(board[x]);
+                }
+              
             }
             
             //resets board functions
@@ -236,6 +349,13 @@ if(!isset($_COOKIE['game_id']))
             .empty{
                 cursor:pointer;
             }
+            .empty:hover{
+              background-color:rgba(200,200,200,0.2);
+            }
+            #game_result{
+              font-size:20px;
+              font-weight:bold;
+            }
         </style>
     </head>
     <body>
@@ -290,15 +410,21 @@ if(!isset($_COOKIE['game_id']))
                 <table  id="ttt_game">
                     <tbody>
                         <tr>
+                            <p id="game_result"></p>
+                        </tr>
+                        <tr>
                             <td>
                                 <table style="width:100%;">
                                   <tbody>
                                       <tr>
-                                          <td>
-                                              <p><a class="btn btn-default" onClick="ttt();" role="button">Start game</a></p>
+                                          <td style="display:inline-block;">
+                                              <p style="margin-right:10px;"><a class="btn btn-default" onClick="ttt(1);" role="button">Untrained AI</a></p>
+                                          </td>
+                                          <td style="text-align:left;display:inline-block;">
+                                              <p><a class="btn btn-primary" onClick="ttt(2);" role="button">Trained AI</a></p>
                                           </td>
                                           <td style="text-align:right;">
-                                              <p><a class="btn btn-default" onClick="stopGame();" role="button">Stop game</a></p>
+                                              <p><a class="btn btn-warning" onClick="stopGame();" role="button">Stop game</a></p>
                                           </td>
                                       </tr>
                                   </tbody>

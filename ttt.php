@@ -5,6 +5,18 @@ include("universal_functions.php");
 $function = (int)($_POST['function']);
 
 
+//gets tic-tac-toe board
+function getBoard()
+{
+	$game_id = (int)$_COOKIE['game_id'];
+
+	$path = "./AI_tic-tac-toe/user_data/".$game_id."_board.txt";
+	$contents = read_file($path);
+
+	return $contents;
+}
+
+
 //start game
 if($function==1)
 {
@@ -17,7 +29,7 @@ if($function==1)
 	chdir("./AI_tic-tac-toe");
 
 	//C++ execution of the tic-tac-toe game
-	// exec("./test_sqlite.out ".$game_id." ".$difficulty);
+	exec("./test_sqlite2.out ".$game_id." ".$difficulty." > /dev/null &");
 
 	$JSON=array();
 	$JSON['message'] = "success";
@@ -35,7 +47,7 @@ else if($function==2)
 	$message = "";
 
 
-	$my_file = './AI_tic-tac-toe/user_data'.$game_id.+"_quit.txt";
+	$my_file = './AI_tic-tac-toe/user_data/'.$game_id."_quit.txt";
 	try {
 		$handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file);
 		$message = "success";
@@ -61,8 +73,17 @@ else if($function==3)
 
 	$game_id = (int)$_COOKIE['game_id'];
 
+	$path = "./AI_tic-tac-toe/user_data/".$game_id."_AI_move.txt";
+	if(file_exists($path))
+	{
+		$contents = read_file($path);
+		//deletes AI's move file so as to not get confused
+		unlink($path);
+	}
+	else
+		$contents = "";
 
-	$contents = read_file("./AI_tic-tac-toe/user_data/".$game_id."_AI_move.txt");
+	$new_board = getBoard();
 
 
 	$JSON=array();
@@ -70,6 +91,7 @@ else if($function==3)
 	$JSON['error'] = "";
 
 	$JSON['new_move'] = $contents;
+	$JSON['board'] = $new_board;
 	echo json_encode($JSON);
 	exit();
 }
@@ -98,10 +120,40 @@ else if($function==4)
 	}
 
 
+	$new_board = getBoard();
+
+
+
 	$JSON=array();
 	$JSON['message'] = $message;
 	$JSON['error'] = $error;
 
+	$JSON['board'] = $new_board;
+	echo json_encode($JSON);
+	exit();
+}
+//checks if game was completed
+else if($function==5)
+{
+	$game_id = (int)$_COOKIE['game_id'];
+
+	$path = "./AI_tic-tac-toe/user_data/".$game_id."_game.txt";
+	if(file_exists($path))
+	{
+		$contents = read_file($path);
+		$contents = (int)$contents[0];
+		//deletes game completion path
+		unlink($path);
+	}
+	else
+		$contents = "";
+
+
+	$JSON=array();
+	$JSON['message'] = "success";
+	$JSON['error'] = "";
+
+	$JSON['game_result'] = $contents;
 	echo json_encode($JSON);
 	exit();
 }
