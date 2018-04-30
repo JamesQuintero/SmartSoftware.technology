@@ -11,19 +11,19 @@
                     <li class="list-group-item list-group-item-success"><strong>Oilers</strong> vs Sharks (4-2)</li>
                     <li class="list-group-item panel-heading">Round 1 Eastern</li>
                     <li class="list-group-item list-group-item-danger"><strong>Canadiens</strong> vs Rangers (2-4)</li>
-                    <li class="list-group-item">Senators vs <strong> Bruins</strong> (3-2)</li>
-                    <li class="list-group-item"><strong>Capitals</strong> vs Leafs (3-2)</li>
+                    <li class="list-group-item list-group-item-danger">Senators vs <strong> Bruins</strong> (4-2)</li>
+                    <li class="list-group-item list-group-item-success"><strong>Capitals</strong> vs Leafs (4-2)</li>
                     <li class="list-group-item list-group-item-success"><strong>Penguins</strong> vs Blue Jackets (4-1)</li>
                 </ul>
             </td>
             <td>
                 <ul class="list-group panel panel-default" style="border:none">
                     <li class="list-group-item panel-heading">Round 2 Western</li>
-                    <li class="list-group-item"><s>Blackhawks</s> Predators vs <strong>Blues</strong></li>
-                    <li class="list-group-item">Ducks vs <strong>Oilers</strong></li>
+                    <li class="list-group-item"><s>Blackhawks</s> Predators vs <strong>Blues</strong> (3-1)</li>
+                    <li class="list-group-item">Ducks vs <strong>Oilers</strong> (2-2)</li>
                     <li class="list-group-item panel-heading">Round 2 Eastern</li>
-                    <li class="list-group-item"><strong>Canadiens</strong> vs Rangers</li>
-                    <li class="list-group-item"><strong>Capitals</strong> vs Penguins</li>
+                    <li class="list-group-item"><s>Canadiens</s> Rangers vs <s>Bruins</s> Senators (1-2)</li>
+                    <li class="list-group-item"><strong>Capitals</strong> vs Penguins (1-3)</li>
                 </ul>
             </td>
             <td>

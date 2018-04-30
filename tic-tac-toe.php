@@ -2,7 +2,7 @@
 include('universal_functions.php');
 
 // can be "ttt" or "uttt"
-$view = "overview";
+$view = "";
 if(!empty($_GET['view']))
     $view = htmlspecialchars($_GET['view']);
 
@@ -34,24 +34,31 @@ if(!isset($_COOKIE['game_id']))
 
             $(document).ready(function(){
                 var view = "<?php echo $view; ?>";
-                if(view=="overview")
-                {
-                    $('#overview').show();
-                    $('#ttt').hide();
-                    $('#uttt').hide();
-                }
-                else if(view=="ttt")
-                {
-                    $('#overview').hide();
-                    $('#ttt').show();
-                    $('#uttt').hide();
-                }
-                else if(view=="uttt")
+                // if(view=="overview")
+                // {
+                //     $('#overview').show();
+                //     $('#ttt').hide();
+                //     $('#uttt').hide();
+                // }
+                // else if(view=="ttt")
+                // {
+                //     $('#overview').hide();
+                //     $('#ttt').show();
+                //     $('#uttt').hide();
+                // }
+                if(view=="uttt")
                 {
                     $('#overview').hide();
                     $('#ttt').hide();
                     $('#uttt').show();
 
+                }
+                //default tic-tac-toe view
+                else
+                {
+                    $('#overview').hide();
+                    $('#ttt').show();
+                    $('#uttt').hide();
                 }
             });
 
@@ -228,6 +235,7 @@ if(!isset($_COOKIE['game_id']))
                   success: function(output)
                   {
                     var game_result = output.game_result;
+                    var board = output.board;
 
                     //if game has ended
                     if(game_result!="")
@@ -264,6 +272,8 @@ if(!isset($_COOKIE['game_id']))
                         //stop AI move checking
                         clearInterval(AI_interval);
                         clearInterval(game_interval);
+
+                        setBoard(board);
 
                     }
                     else
@@ -369,9 +379,9 @@ if(!isset($_COOKIE['game_id']))
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
                 <li><p style="font-weight:bold;font-size:16px;padding-left:20px;padding-right:20px;">Sports Games Predictor</p></li>
-                <li <?php if($view=="overview") echo "class='active'"; ?> ><a href="?view=overview">Overview</a></li>
-                <li <?php if($view=="ttt") echo "class='active'";   ?> ><a href="?view=ttt">Tic-Tac-Toe</a></li>
-                <li <?php if($view=="uttt") echo "class='active'";   ?> ><a href="?view=uttt">Ultimate Tic-Tac-Toe</a></li>
+                <!-- <li <?php if($view=="overview") echo "class='active'"; ?> ><a href="?view=overview">Overview</a></li> -->
+                <li <?php if($view!="uttt") echo "class='active'";   ?> ><a href="./tic-tac-toe.php" >Tic-Tac-Toe</a></li>
+                <li <?php if($view=="uttt") echo "class='active'";   ?> ><a href="?view=uttt" >Ultimate Tic-Tac-Toe</a></li>
               </ul>
               <!-- <hr /> -->
               <!-- <ul class="nav nav-sidebar" id="seasons_list">

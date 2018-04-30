@@ -137,6 +137,8 @@ else if($function==5)
 {
 	$game_id = (int)$_COOKIE['game_id'];
 
+	$board="";
+
 	$path = "./AI_tic-tac-toe/user_data/".$game_id."_game.txt";
 	if(file_exists($path))
 	{
@@ -144,6 +146,8 @@ else if($function==5)
 		$contents = (int)$contents[0];
 		//deletes game completion path
 		unlink($path);
+
+		$board = getBoard();
 	}
 	else
 		$contents = "";
@@ -153,6 +157,7 @@ else if($function==5)
 	$JSON['message'] = "success";
 	$JSON['error'] = "";
 
+	$JSON['board'] = $board;
 	$JSON['game_result'] = $contents;
 	echo json_encode($JSON);
 	exit();
